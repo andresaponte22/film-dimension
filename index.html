@@ -7,6 +7,40 @@
   <title>Film Dimension</title>
 </head>
 <body>
-  
+  <header>
+    <h1> The Film Dimension</h1>
+  </header>
+
+  <main>
+    <!-- Column 1 Left Side: 2 Divs >> 1st Container the Inputs(Search & Options), 2nd Container the Search History -->
+    <section>
+      <!-- Container 1 -->
+      <div id="userInput-container">
+        <input id="searchValue" type=text placeholder="Movie Title"/>
+        <select id="genreChoice">
+          <option value="Choose Genre">Genres..</option>
+          <option value="Action">Action</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Horror">Horror</option>
+          <option value="Drama">Drama</option>
+        </select>
+        <button type="submit" id="searchBtn">Search</button>
+      </div>
+      <!-- Container 2 -->
+      <div id="searchHistory-container">
+        <ul>
+          <!-- APPEND OR DROP SEARCH QUERIES HERE THROUGH JAVASCRIPT >> Use LocalStorage -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- Column 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
+    <section>
+      <!-- Container1 -->
+      <div id="movieTrailer-container"></div>
+      <!-- Container2 -->
+      <div id="rottenTomatoes-container"></div>
+    </section>
+  </main>
 </body>
 </html>
