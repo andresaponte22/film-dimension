@@ -80,14 +80,11 @@ var pastSearches = []
 // Function - Get Movie ID - search the API
 // TO DO: Create movie database API fetch to get movie ID based on user movie title input
 function getMovieID() {
-    movieTitleInput = "Pulp Fiction";
 
     var movieID;
 
-    // https://imdb8.p.rapidapi.com/title/get-reviews?tconst=tt0944947&currentCountry=US&purchaseCountry=US - sample URL, get-reviews
-
     // Get list of records matching user movie title input, select first record and assign to 'movieID' variable
-    var requestUrl = `https://imdb8.p.rapidapi.com/auto-complete?q=${movieTitleInput}`   
+    var requestUrl = `https://imdb8.p.rapidapi.com/auto-complete?q=${movieTitleInput.value}`   
     fetch(requestUrl, {
 	"method": "GET",
 	"headers": {
@@ -135,6 +132,7 @@ function getMovieReview (movieID) {
         
         metaScore = data.metacritic.metaScore;
         console.log(`metaScore: ${metaScore}`);
+        
 
         imbdRating = data.imdbrating.rating;
         console.log(`IMBd rating: ${imbdRating}`);
@@ -174,8 +172,8 @@ function updateSearchHistory() {
 
 
 
-// Function - Display Rotten Tomates movie critic reviews & scores to main page
-// TO DO: Create function that will add Rotten Tomates API reviews and scores to main page
+// Function - Display IMBd movie critic reviews & scores to main page
+// TO DO: Create function that will add movie reviews and scores to main page
 
 
 
@@ -224,10 +222,9 @@ searchButton.addEventListener("click", function(event) {
 
   var movieTitleTest = localStorage.getItem("movieTitle")
   console.log(movieTitleTest)
-  updateSearchHistory()
+  updateSearchHistory();
+  getMovieID();
 })
-
-
 
 
 
@@ -238,8 +235,6 @@ searchButton.addEventListener("click", function(event) {
 // ---- Functions to call  ---- 
 
 // TO DO: List any functions that are to be called upon main page load
-
-getMovieID();
 
 
 
