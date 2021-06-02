@@ -19,13 +19,12 @@
 // Reference to important DOM elements
 // e.g. var [nameEl] = document.querySelector('#[id]');
 // TO DO: Add global variables that will reference DOM elements
+var movieTitleInput = document.querySelector("#movieTitle")
+var genreChoice = document.querySelector('#genreChoice')
+var searchButton = document.querySelector('#searchBtn')
 
 
-
-
-
-
-
+var pastSearches = []
 
 
 
@@ -93,7 +92,9 @@
 
 // Function - Update variables and localStorage related to saved/searched movie titles, then call function to display on page
 // TO DO: Create function that will update searched/saved movie list variables & localStorage then call funciton to update display on page
+function updateSearchHistory() {
 
+}
 
 
 
@@ -155,6 +156,19 @@
 
 // TO DO: Create event listeners 
 // e.g. languageButtonsEl.addEventListener('click', buttonClickHandler);
+
+//Event listener for click on search button
+searchButton.addEventListener("click", function(event) {
+  event.preventDefault()
+  
+  var movieTitle = document.querySelector("#movieTitle")
+
+  localStorage.setItem("movieTitle", movieTitle.value)
+
+  var movieTitleTest = localStorage.getItem("movieTitle")
+  console.log(movieTitleTest)
+  updateSearchHistory()
+})
 
 
 
