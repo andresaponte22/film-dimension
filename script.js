@@ -198,7 +198,11 @@ function updateSearchHistory() {
 
 // Function - Display saved / searched (?) movies on main page 
 // TO DO: Create function that will display saved/searched movies to main page
-
+function saveSearch() {
+  var search = movieTitleInput.value
+  pastSearches.push(search)
+  localStorage.setItem("searchHistory", JSON.stringify(pastSearches))
+}
 
 
 
@@ -220,9 +224,7 @@ searchButton.addEventListener("click", function(event) {
 
   localStorage.setItem("movieTitle", movieTitle.value)
 
-  var movieTitleTest = localStorage.getItem("movieTitle")
-  console.log(movieTitleTest)
-  updateSearchHistory();
+  saveSearch();
   getMovieID();
 })
 
