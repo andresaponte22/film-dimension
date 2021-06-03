@@ -27,6 +27,9 @@ var searchHistoryEl = document.querySelector('#searchHistory')
 var metaScoreEl = document.querySelector("#metaScore");
 var imdbScoreEl = document.querySelector("#imdbScore");
 var reviewsEl = document.querySelectorAll(".reviews");
+var criticEl = document.querySelectorAll(".critic");
+var quoteEl = document.querySelectorAll(".quote");
+var urlEl = document.querySelectorAll(".url");
 
 var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
@@ -236,19 +239,27 @@ function getMovieReview (movieID) {
         imbdRating = data.imdbrating.rating;
         console.log(`IMBd rating: ${imbdRating}`);
 
-        // Display Scores onto html page
+        // DISPLAY CRITIC SCORES***--------------
         metaScoreEl.innerHTML = "Metascore: "+data.metacritic.metaScore;
         imdbScoreEl.innerHTML = "IMDB Rating: "+data.imdbrating.rating;
 
         
-        // Diplay Critic reviews
+        // DISPLAY CRITIC REVIEWS AND LINKS--------------
         let index = 0;
-        for (i=0; i < data.criticreviews.length; i++) {
+        for (i=0; i < data.metacritic.reviews.length; i++) {
           
           // reviewsEl.innerHTML = ""
-          reviewsEl[index].innerHTML = data.criticreviews[i];
+          let criticName = data.metacritic.reviews[i].reviewSite;
+          criticEl[index].innerHTML= criticName;
+
+          let quoteActual = data.metacritic.reviews[i].quote;
+          quoteEl[index].innerHTML = '"'+quoteActual+'"';
+
+          let urlLink = data.metacritic.reviews[i].reviewUrl;
+          // urlEl[index].innerHTML = "URL: "+urlLink
+          var criticUrl = {link: "<a href='"+urlLink+"'>"+urlLink+"</a>"}
+          urlEl[index].innerHTML = criticUrl.link.valueOf()
           index++;
-          
         }
 
     })
