@@ -39,6 +39,8 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 var pastSearches = [];
 var pastSearchesID = []
 
+// ENTER YOUR API KEY BELOW BETWEEN THE SINGLE QUOTES - KEEP THE QUOTES
+var apiKey = 'YOUR API KEY'
 
 // ---- Functions ---- 
 
@@ -73,7 +75,7 @@ function youtubeApi() {
 fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
 	"method": "GET",
 	"headers": {
-		"x-rapidapi-key": "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a",
+		"x-rapidapi-key": apiKey,
 		"x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
 	}
 })
@@ -103,7 +105,7 @@ function getGenreMovieDetails(searchResults) {
   var movieID;
   var moviesDetails = [];
 
-  console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
+  // console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
 
   for (i = 0; i < searchResults.length; i++) {
     movieID = searchResults[i];
@@ -113,7 +115,7 @@ function getGenreMovieDetails(searchResults) {
     fetch(requestUrl, {
     "method": "GET",
     "headers": {
-    "x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+    "x-rapidapi-key": apiKey,
     "x-rapidapi-host": "imdb8.p.rapidapi.com"
     }
     })
@@ -142,7 +144,6 @@ function getGenreMovieDetails(searchResults) {
 }
 
 // Function - Get top movies IDs by Genre
-// TO DO: Get top movies by genre from API, use movie IDs to then get useful info for search results listing
 // TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
 function getPopularByGenre() {
   
@@ -153,7 +154,7 @@ function getPopularByGenre() {
   fetch(requestUrl, {
     "method": "GET",
     "headers": {
-      "x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+      "x-rapidapi-key": apiKey,
       "x-rapidapi-host": "imdb8.p.rapidapi.com"
     }
   })
@@ -188,7 +189,7 @@ function getMovieID() {
     fetch(requestUrl, {
 	    "method": "GET",
 	    "headers": {
-		  "x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+		  "x-rapidapi-key": apiKey,
 		  "x-rapidapi-host": "imdb8.p.rapidapi.com"
 	  }
     })
@@ -221,7 +222,7 @@ function getMovieReview (movieID) {
     fetch(requestUrl, {
 	  "method": "GET",
 	  "headers": {
-		"x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+		"x-rapidapi-key": apiKey,
 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
 	  }
     })
@@ -317,12 +318,8 @@ function updateSearchHistory(search) {
 
 function displayGenreResults (moviesDetails) {
 
-  // console.log(`Movies details: ${moviesDetails}`);
-  // console.log(`Movies details length: ${moviesDetails.length}`);
-
   for (var i = 0; i < moviesDetails.length; i++) {
-    console.log(`in the for loop`);
-    console.log(moviesDetails[i]);
+    
     var movieEl = document.createElement("div");
     var movieTitleEl = document.createElement("h2");
     var movieImbdRatingEl = document.createElement("p");
