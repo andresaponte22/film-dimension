@@ -64,13 +64,33 @@ var pastSearches = []
 
 
 // ---- Functions to fetch API data  ---- 
-
+function youtubeApi() {
+  
 // Function - YouTube API fetch here - search the API
 // TO DO: Create YouTube API fetch
+var requestUrl = "https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=UxxajLWwzqY&geo=US"
 
-
-
-
+fetch(requestUrl, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a",
+		"x-rapidapi-host": "ytstream-download-youtube-videos.p.rapidapi.com"
+	}
+})
+.then(response => {
+	console.log(response)
+  // console.log(response.status)
+  return response.json();
+  
+})
+.then(function(data) {
+  console.log(data);
+})
+.catch(err => {
+	console.error(err);
+});
+}
+youtubeApi()
 
 
 
