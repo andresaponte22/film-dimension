@@ -39,8 +39,9 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 var pastSearches = [];
 var pastSearchesID = []
 
-// ENTER YOUR API KEY BELOW BETWEEN THE SINGLE QUOTES - KEEP THE QUOTES
-var apiKey = 'YOUR API KEY'
+// ENTER YOUR API KEYS BELOW BETWEEN THE SINGLE QUOTES - KEEP THE QUOTES - CAN BE THE SAME API KEY
+var apiKeyImbd = 'YOUR API KEY FOR IMBd API'
+var apiKeyYoutube = 'YOUR API KEY FOR YouTube Search Results API'
 
 // ---- Functions ---- 
 
@@ -75,7 +76,7 @@ function youtubeApi() {
 fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
 	"method": "GET",
 	"headers": {
-		"x-rapidapi-key": apiKey,
+		"x-rapidapi-key": apiKeyYoutube,
 		"x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
 	}
 })
@@ -115,7 +116,7 @@ function getGenreMovieDetails(searchResults) {
     fetch(requestUrl, {
     "method": "GET",
     "headers": {
-    "x-rapidapi-key": apiKey,
+    "x-rapidapi-key": apiKeyImbd,
     "x-rapidapi-host": "imdb8.p.rapidapi.com"
     }
     })
@@ -154,7 +155,7 @@ function getPopularByGenre() {
   fetch(requestUrl, {
     "method": "GET",
     "headers": {
-      "x-rapidapi-key": apiKey,
+      "x-rapidapi-key": apiKeyImbd,
       "x-rapidapi-host": "imdb8.p.rapidapi.com"
     }
   })
@@ -189,7 +190,7 @@ function getMovieID() {
     fetch(requestUrl, {
 	    "method": "GET",
 	    "headers": {
-		  "x-rapidapi-key": apiKey,
+		  "x-rapidapi-key": apiKeyImbd,
 		  "x-rapidapi-host": "imdb8.p.rapidapi.com"
 	  }
     })
@@ -222,7 +223,7 @@ function getMovieReview (movieID) {
     fetch(requestUrl, {
 	  "method": "GET",
 	  "headers": {
-		"x-rapidapi-key": apiKey,
+		"x-rapidapi-key": apiKeyImbd,
 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
 	  }
     })
