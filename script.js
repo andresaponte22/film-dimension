@@ -26,6 +26,9 @@ var searchButton = document.querySelector('#searchBtn')
 
 var pastSearches = []
 
+var metaScoreEl = document.querySelector("#metaScore");
+var imdbScoreEl = document.querySelector("#imdbScore");
+var reviewsEl = document.querySelectorAll(".reviews");
 
 
 // Global Variables
