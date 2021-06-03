@@ -23,22 +23,16 @@ var movieTitleInput = document.querySelector("#movieTitle")
 var genreChoice = document.querySelector('#genreChoice')
 var searchButton = document.querySelector('#searchBtn')
 
-
-var pastSearches = []
-
 var metaScoreEl = document.querySelector("#metaScore");
 var imdbScoreEl = document.querySelector("#imdbScore");
 var reviewsEl = document.querySelectorAll(".reviews");
 
+var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 // Global Variables
 // TO DO: Define any variables with global scope excluding those referencing DOM elements already noted above
 
-
-
-
-
-
+var pastSearches = [];
 
 
 
@@ -92,6 +86,7 @@ fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTi
 });
 }
 
+// Function - get details of movies from popular by genre fetch request
 function getGenreMovieDetails(searchResults) {
   
   var movieID;
@@ -112,11 +107,10 @@ function getGenreMovieDetails(searchResults) {
     }
     })
     .then(response => {
-      // console.log(response);
       return response.json();
     })
     .then(function(data) {
-        // console.log(data);
+        console.log(data);
         
         var movie = {
           imbdTitle: data.imdbrating.title,
@@ -124,15 +118,16 @@ function getGenreMovieDetails(searchResults) {
           metaScore: data.metacritic.metaScore
         }
         moviesDetails.push(movie)
+        
+        if(moviesDetails.length === searchResults.length) {
+          displayGenreResults(moviesDetails);
+        }
     })
     .catch(err => {
       console.error(err);
     });
   }
-  
-  // console.log(moviesDetails);
-  displayGenreResults(moviesDetails);
-  
+  return;
 }
 
 // Function - Get top movies IDs by Genre
@@ -283,15 +278,29 @@ function updateSearchHistory() {
 
 function displayGenreResults (moviesDetails) {
 
-  console.log('in display genre results');
-  console.log(moviesDetails);
-  // console.log(`In displayGenreResults\nMovie details:\n${moviesDetails}`)
+  // console.log(`Movies details: ${moviesDetails}`);
+  // console.log(`Movies details length: ${moviesDetails.length}`);
 
+  for (var i = 0; i < moviesDetails.length; i++) {
+    console.log(`in the for loop`);
+    console.log(moviesDetails[i]);
+    var movieEl = document.createElement("div");
+    var movieTitleEl = document.createElement("h2");
+    var movieImbdRatingEl = document.createElement("p");
+    var movieMetaScoreEl = document.createElement("p");
 
+    movieTitleEl.textContent = `Movie title: ${moviesDetails[i].imbdTitle}`;
+    movieImbdRatingEl.textContent = `Movie IMBd rating: ${moviesDetails[i].imbdRating}`;
+    movieMetaScoreEl.textContent = `Movie meta score: ${moviesDetails[i].metaScore}`;
+    
+    movieEl.appendChild(movieTitleEl);
+    movieEl.appendChild(movieImbdRatingEl);
+    movieEl.appendChild(movieMetaScoreEl);
 
+    genreResultsContainerEl.appendChild(movieEl);
+  }
+  return;
 };
-
-
 
 
 // Function - Display saved / searched (?) movies on main page 
