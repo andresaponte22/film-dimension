@@ -71,20 +71,17 @@ function youtubeApi() {
   
 // Function - YouTube API fetch here - search the API
 // TO DO: Create YouTube API fetch
-var requestUrl = "https://ytstream-download-youtube-videos.p.rapidapi.com/dl?id=UxxajLWwzqY&geo=US"
 
-fetch(requestUrl, {
+fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value}`, {
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-key": "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a",
-		"x-rapidapi-host": "ytstream-download-youtube-videos.p.rapidapi.com"
+		"x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
 	}
 })
 .then(response => {
-	console.log(response)
-  // console.log(response.status)
-  return response.json();
-  
+	console.log(response);
+  return response.json()
 })
 .then(function(data) {
   console.log(data);
@@ -93,7 +90,7 @@ fetch(requestUrl, {
 	console.error(err);
 });
 }
-youtubeApi()
+
 
 
 
@@ -249,6 +246,7 @@ searchButton.addEventListener("click", function(event) {
 
   saveSearch();
   getMovieID();
+  youtubeApi()
 })
 
 
