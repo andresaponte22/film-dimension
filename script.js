@@ -24,6 +24,7 @@ var genreChoice = document.querySelector('#genreChoice')
 var searchButton = document.querySelector('#searchBtn')
 
 
+
 var pastSearches = []
 
 
@@ -69,7 +70,7 @@ function youtubeApi() {
 // Function - YouTube API fetch here - search the API
 // TO DO: Create YouTube API fetch
 
-fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value}`, {
+fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-key": "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a",
@@ -82,13 +83,24 @@ fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTi
 })
 .then(function(data) {
   console.log(data);
+  movieURL = data.items[1].link.split("https://www.youtube.com/watch?v=")[1];
+  console.log(`movieURL: ${movieURL}`);
+  // embedded video to display on html
+  var obj = {video: {
+    value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
+  }}
+  document.write(obj.video.value);
 })
 .catch(err => {
 	console.error(err);
 });
 }
 
+// function getURL() {
+//   var movieURL;
 
+//   var requestUrl = 
+// }
 
 
 
