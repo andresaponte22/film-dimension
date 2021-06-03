@@ -22,9 +22,11 @@
 var movieTitleInput = document.querySelector("#movieTitle")
 var genreChoice = document.querySelector('#genreChoice')
 var searchButton = document.querySelector('#searchBtn')
+var searchHistoryEl = document.querySelector('#searchHistory')
 
 
 var pastSearches = []
+var pastSearchesID = []
 
 var metaScoreEl = document.querySelector("#metaScore");
 var imdbScoreEl = document.querySelector("#imdbScore");
@@ -121,6 +123,8 @@ function getMovieID() {
         movieID = data.d[0].id;
         console.log(`movieID: ${movieID}`);
         getMovieReview(movieID);
+        saveSearch(movieID)
+
     })
     .catch(err => {
 	    console.error(err);
@@ -167,8 +171,10 @@ function getMovieReview (movieID) {
 
 // Function - Update variables and localStorage related to saved/searched movie titles, then call function to display on page
 // TO DO: Create function that will update searched/saved movie list variables & localStorage then call funciton to update display on page
-function updateSearchHistory() {
-
+function updateSearchHistory(search) {
+  searchList = document.createElement("li")
+  searchList.appendChild(document.createTextNode(search))
+  searchHistoryEl.appendChild(searchList)
 }
 
 
@@ -218,10 +224,14 @@ function updateSearchHistory() {
 
 // Function - Display saved / searched (?) movies on main page 
 // TO DO: Create function that will display saved/searched movies to main page
-function saveSearch() {
+function saveSearch(id) {
   var search = movieTitleInput.value
+  var searchID = id
   pastSearches.push(search)
-  localStorage.setItem("searchHistory", JSON.stringify(pastSearches))
+  pastSearchesID.push(searchID)
+  localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
+  localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
+  updateSearchHistory(search)
 }
 
 
@@ -244,7 +254,6 @@ searchButton.addEventListener("click", function(event) {
 
   localStorage.setItem("movieTitle", movieTitle.value)
 
-  saveSearch();
   getMovieID();
   youtubeApi()
 })
