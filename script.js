@@ -80,10 +80,11 @@ fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTi
 	}
 })
 .then(response => {
-	console.log(response);
+	// console.log(response);
   return response.json()
 })
 .then(function(data) {
+  console.log(`youTube API \n----------`);
   console.log(data);
 })
 .catch(err => {
@@ -91,11 +92,84 @@ fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTi
 });
 }
 
+function getGenreMovieDetails(searchResults) {
+  
+  var movieID;
+  var moviesDetails = [];
 
+  console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
 
+  for (i = 0; i < searchResults.length; i++) {
+    movieID = searchResults[i];
 
+    var requestUrl = `https://imdb8.p.rapidapi.com/title/get-reviews?tconst=${movieID}&currentCountry=CA&purchaseCountry=CA`   
+    
+    fetch(requestUrl, {
+    "method": "GET",
+    "headers": {
+    "x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+    "x-rapidapi-host": "imdb8.p.rapidapi.com"
+    }
+    })
+    .then(response => {
+      // console.log(response);
+      return response.json();
+    })
+    .then(function(data) {
+        // console.log(data);
+        
+        var movie = {
+          imbdTitle: data.imdbrating.title,
+          imbdRating: data.imdbrating.rating,
+          metaScore: data.metacritic.metaScore
+        }
+        moviesDetails.push(movie)
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+  
+  // console.log(moviesDetails);
+  displayGenreResults(moviesDetails);
+  
+}
 
+// Function - Get top movies IDs by Genre
+// TO DO: Get top movies by genre from API, use movie IDs to then get useful info for search results listing
+// TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
+function getPopularByGenre() {
+  
+  var genreInput = 'horror'
+  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genreInput}`;   
+  var searchResults = [];
 
+  fetch(requestUrl, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+      "x-rapidapi-host": "imdb8.p.rapidapi.com"
+    }
+  })
+  .then(response => {
+    // console.log(response);
+    return response.json();
+  })
+  .then(function(data) {
+    console.log(`In getPopularBy Genre function\n2 Top Movies in ${genreInput} Genre\n----------`);
+    // console.log(data);
+    for (i=0; i < 2; i++) {
+      searchResults[i] = data[i];
+      searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
+      searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
+      console.log(searchResults[i]);
+    };
+    getGenreMovieDetails(searchResults);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+}
 
 // Function - Get Movie ID - search the API
 // TO DO: Create movie database API fetch to get movie ID based on user movie title input
@@ -106,20 +180,20 @@ function getMovieID() {
     // Get list of records matching user movie title input, select first record and assign to 'movieID' variable
     var requestUrl = `https://imdb8.p.rapidapi.com/auto-complete?q=${movieTitleInput.value}`   
     fetch(requestUrl, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
-		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-	}
+	    "method": "GET",
+	    "headers": {
+		  "x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
+		  "x-rapidapi-host": "imdb8.p.rapidapi.com"
+	  }
     })
     .then(response => {
-	    console.log(response);
+	      // console.log(response);
         return response.json();
     })
     .then(function(data) {
         console.log(data);
         movieID = data.d[0].id;
-        console.log(`movieID: ${movieID}`);
+        // console.log(`movieID: ${movieID}`);
         getMovieReview(movieID);
     })
     .catch(err => {
@@ -137,15 +211,15 @@ function getMovieReview (movieID) {
     var imbdRating;
 
     fetch(requestUrl, {
-	"method": "GET",
-	"headers": {
+	  "method": "GET",
+	  "headers": {
 		"x-rapidapi-key": "1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2",
 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
-	}
+	  }
     })
     .then(response => {
-	    console.log(response);
-        return response.json();
+	    // console.log(response);
+      return response.json();
     })
     .then(function(data) {
         console.log(data);
@@ -204,14 +278,18 @@ function updateSearchHistory() {
 
 
 
-// Function - Display Rotten Tomates movie listing based on genre results on second page, clickable movie info
+// Function - Display movie listing based on genre results on second page, clickable movie info
 // TO DO: Create function that will add Rotten Tomates API movie list based on genre, clickable to display on main page
 
+function displayGenreResults (moviesDetails) {
+
+  console.log('in display genre results');
+  console.log(moviesDetails);
+  // console.log(`In displayGenreResults\nMovie details:\n${moviesDetails}`)
 
 
 
-
-
+};
 
 
 
@@ -246,7 +324,7 @@ searchButton.addEventListener("click", function(event) {
 
   saveSearch();
   getMovieID();
-  youtubeApi()
+  youtubeApi();
 })
 
 
@@ -259,9 +337,4 @@ searchButton.addEventListener("click", function(event) {
 
 // TO DO: List any functions that are to be called upon main page load
 
-
-
-
-
-
-
+// getPopularByGenre();
