@@ -230,6 +230,22 @@ function getMovieReview (movieID) {
 
         imbdRating = data.imdbrating.rating;
         console.log(`IMBd rating: ${imbdRating}`);
+
+        // Display Scores onto html page
+        metaScoreEl.innerHTML = "Metascore: "+data.metacritic.metaScore;
+        imdbScoreEl.innerHTML = "IMDB Rating: "+data.imdbrating.rating;
+
+        
+        // Diplay Critic reviews
+        let index = 0;
+        for (i=0; i < data.criticreviews.length; i++) {
+          
+          // reviewsEl.innerHTML = ""
+          reviewsEl[index].innerHTML = data.criticreviews[i];
+          index++;
+          
+        }
+
     })
     .catch(err => {
 	    console.error(err);
