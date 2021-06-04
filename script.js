@@ -30,7 +30,7 @@ var reviewsEl = document.querySelectorAll(".reviews");
 var criticEl = document.querySelectorAll(".critic");
 var quoteEl = document.querySelectorAll(".quote");
 var urlEl = document.querySelectorAll(".url");
-// var youtubeEl = document.querySelector("#movieTrailer-container")
+
 var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 // Global Variables
@@ -173,15 +173,13 @@ function getPopularByGenre() {
     return response.json();
   })
   .then(function(data) {
-
     console.log(`In getPopularBy Genre function\n2 Top Movies in ${genre} Genre\n----------`);
-
     // console.log(data);
     for (i=0; i < 2; i++) {
       searchResults[i] = data[i];
       searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
       searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
-      // console.log(searchResults[i]);
+      console.log(searchResults[i]);
     };
     getGenreMovieDetails(searchResults);
   })
@@ -223,9 +221,6 @@ function getMovieID() {
 // Function - get movie review results based on movieID
 // TO DO: Create function that gets movie review data
 function getMovieReview (movieID) {
-
-  console.log("You are in getMovieReview function")  
-  console.log(`${movieID}`);
 
     // Get review data for movie based on 'movieID' variable
     var requestUrl = `https://imdb8.p.rapidapi.com/title/get-reviews?tconst=${movieID}&currentCountry=CA&purchaseCountry=CA`   
@@ -280,6 +275,7 @@ function getMovieReview (movieID) {
     .catch(err => {
 	    console.error(err);
     });
+
 }
 
 // ---- Function to update localStorage ---- 
@@ -296,6 +292,10 @@ function updateSearchHistory(search, movieID) {
   })
   searchHistoryEl.prepend(searchList)
 }
+
+
+
+
 
 
 
@@ -322,8 +322,7 @@ function displayGenreResults (moviesDetails) {
     var movieMetaScoreEl = document.createElement("p");
     var movieButtonEl = document.createElement("button");
 
-    movieButtonEl.setAttribute("genre-id", moviesDetails[i].movieID);
-    movieButtonEl.setAttribute("genre-title", moviesDetails[i].imbdTitle);
+    movieButtonEl.setAttribute("id", moviesDetails[i].movieID);
     movieButtonEl.classList = "btn-genre-item";
 
     movieEl.classList = "genre-item";
@@ -361,7 +360,7 @@ function saveSearch(id) {
   localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
   localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
   updateSearchHistory(search, searchID)
-}
+}                   
 
 
 
@@ -372,7 +371,6 @@ function saveSearch(id) {
 
 genreChoiceEl.addEventListener("change", function(event) {
   event.preventDefault()
-  window.location.replace("genre.html")
   var genreChoice = genreChoiceEl.value
   localStorage.setItem("genreChoice", genreChoice)
   getPopularByGenre()
@@ -388,7 +386,7 @@ searchButton.addEventListener("click", function(event) {
   localStorage.setItem("movieTitle", movieTitle.value)
 
   getMovieID();
-  youtubeApi();
+  //youtubeApi();
 })
 
 // Event listener for click on button for movies listed within genreResults-container
@@ -398,13 +396,10 @@ function handleGenreMovieClick(event) {
   var element = event.target;
 
   if (element.matches(".btn-genre-item")) {
-    var genreMovieID = element.getAttribute("genre-id");
-    var genreMovieTitle = element.getAttribute("genre-title");
-    getMovieReview(genreMovieID);
-    // youtubeApi();
+    genreMovieID = element.getAttribute("id");
+    console.log(`Mouse click on movie with id of: ${genreMovieID}`)
   }
-
-  return;
+  
 }
 
 
@@ -413,5 +408,5 @@ function handleGenreMovieClick(event) {
 
 // TO DO: List any functions or event listeners that are to be called upon launch
 
+//genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
 
-genreResultsContainerEl.addEventListener("click", handleGenreMovieClick){}
