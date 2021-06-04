@@ -173,13 +173,15 @@ function getPopularByGenre() {
     return response.json();
   })
   .then(function(data) {
+
     console.log(`In getPopularBy Genre function\n2 Top Movies in ${genre} Genre\n----------`);
+
     // console.log(data);
     for (i=0; i < 2; i++) {
       searchResults[i] = data[i];
       searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
       searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
-      console.log(searchResults[i]);
+      // console.log(searchResults[i]);
     };
     getGenreMovieDetails(searchResults);
   })
@@ -221,6 +223,9 @@ function getMovieID() {
 // Function - get movie review results based on movieID
 // TO DO: Create function that gets movie review data
 function getMovieReview (movieID) {
+
+  console.log("You are in getMovieReview function")  
+  console.log(`${movieID}`);
 
     // Get review data for movie based on 'movieID' variable
     var requestUrl = `https://imdb8.p.rapidapi.com/title/get-reviews?tconst=${movieID}&currentCountry=CA&purchaseCountry=CA`   
@@ -275,7 +280,6 @@ function getMovieReview (movieID) {
     .catch(err => {
 	    console.error(err);
     });
-
 }
 
 // ---- Function to update localStorage ---- 
@@ -292,10 +296,6 @@ function updateSearchHistory(search, movieID) {
   })
   searchHistoryEl.prepend(searchList)
 }
-
-
-
-
 
 
 
@@ -322,7 +322,8 @@ function displayGenreResults (moviesDetails) {
     var movieMetaScoreEl = document.createElement("p");
     var movieButtonEl = document.createElement("button");
 
-    movieButtonEl.setAttribute("id", moviesDetails[i].movieID);
+    movieButtonEl.setAttribute("genre-id", moviesDetails[i].movieID);
+    movieButtonEl.setAttribute("genre-title", moviesDetails[i].imbdTitle);
     movieButtonEl.classList = "btn-genre-item";
 
     movieEl.classList = "genre-item";
@@ -397,10 +398,13 @@ function handleGenreMovieClick(event) {
   var element = event.target;
 
   if (element.matches(".btn-genre-item")) {
-    genreMovieID = element.getAttribute("id");
-    console.log(`Mouse click on movie with id of: ${genreMovieID}`)
+    var genreMovieID = element.getAttribute("genre-id");
+    var genreMovieTitle = element.getAttribute("genre-title");
+    getMovieReview(genreMovieID);
+    // youtubeApi();
   }
-  
+
+  return;
 }
 
 
@@ -409,5 +413,5 @@ function handleGenreMovieClick(event) {
 
 // TO DO: List any functions or event listeners that are to be called upon launch
 
-//genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
 
+genreResultsContainerEl.addEventListener("click", handleGenreMovieClick){}
