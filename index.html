@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <title>Film Dimension</title>
 </head>
 <body>
@@ -11,9 +16,10 @@
     <h1> The Film Dimension</h1>
   </header>
 
-  <main>
+  <main class="row">
+    <!-- ---------------LEFT SIDE COLUMN------------- -->
     <!-- Column 1 Left Side: 2 Divs >> 1st Container the Inputs(Search & Options), 2nd Container the Search History -->
-    <section>
+    <section class="col s3">
       <!-- Container 1 -->
       <div id="userInput-container">
         <input id="movieTitle" name="movieTitle" type=text placeholder="Movie Title"/>
@@ -40,7 +46,11 @@
           <option value="War">War</option>
           <option value="Western">Western</option>
         </select>
-        <button type="submit" id="searchBtn">Search</button>
+        <!-- <button type="submit" id="searchBtn">Search</button> -->
+        <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
+        <!-- <button class="btn waves-effect waves-light" type="submit" name="action" id="searchBtn">Submit -->
+          
+        </button>
       </div>
       <!-- Container 2 -->
       <div id="searchHistory-container">
@@ -49,9 +59,9 @@
         </ul>
       </div>
     </section>
-
-    <!-- Column 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
-    <section>
+    <!-- ---------------RIGHT SIDE COLUMN------------- -->
+    <!-- COLUMN 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
+    <section class="col s6">
       <!-- Container1 -->
       <div id="movieTrailer-container"></div>
       
