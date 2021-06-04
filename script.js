@@ -108,6 +108,7 @@ function getGenreMovieDetails(searchResults) {
   var moviesDetails = [];
 
   // console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
+  // console.log(searchResults);
 
   for (i = 0; i < searchResults.length; i++) {
     movieID = searchResults[i];
@@ -125,7 +126,6 @@ function getGenreMovieDetails(searchResults) {
       return response.json();
     })
     .then(function(data) {
-        console.log(data);
         
         var movie = {
           imbdTitle: data.imdbrating.title,
@@ -133,8 +133,12 @@ function getGenreMovieDetails(searchResults) {
           rating: data.certificate.certificate,
           imbdRating: data.imdbrating.rating,
           metaScore: data.metacritic.metaScore,
-          movieID: movieID
+          movieID: data.imdbrating.id
         }
+
+        movie.movieID = movie.movieID.slice(7); // remove "/title/" from id string
+        movie.movieID = movie.movieID.substring(0, movie.movieID.length - 1); // remove "/" at end of string to get movie ID on its own
+
         moviesDetails.push(movie)
         
         if(moviesDetails.length === searchResults.length) {
@@ -199,13 +203,11 @@ function getMovieID() {
 	  }
     })
     .then(response => {
-	      // console.log(response);
         return response.json();
     })
     .then(function(data) {
         console.log(data);
         movieID = data.d[0].id;
-        // console.log(`movieID: ${movieID}`);
         getMovieReview(movieID);
         saveSearch(movieID)
 
@@ -299,66 +301,56 @@ function updateSearchHistory(search, movieID) {
 
 // ---- Functions to update display on pages ---- 
 
-// Function - Display YouTube video to main page
-// TO DO: Create function that will add YouTube API result to main page
-
-
-
-
-
-
-
-
-
-
-// Function - Display IMBd movie critic reviews & scores to main page
-// TO DO: Create function that will add movie reviews and scores to main page
-
-
-
-
-
-
-
-
-
-
 // Function - Display movie listing based on genre results on second page, clickable movie info
-// TO DO: Create function that will add Rotten Tomates API movie list based on genre, clickable to display on main page
+// TO DO: Create function that will add API movie list based on genre, clickable to display on main page
 
 function displayGenreResults (moviesDetails) {
 
+  // TO DO: Add code to display dummy results if avoiding fetch request within getGenreMovieDetails function 
+  // <div id="tt8332922"><h2>A Quiet Place Part II</h2><p>2020</p><p>14A</p><p>IMBd rating: 7.9/10</p><p>metacritic metascore: 71/100</p></div>
+  
+
+  // To display actual results
   for (var i = 0; i < moviesDetails.length; i++) {
     
     var movieEl = document.createElement("div");
-    var movieTitleEl = document.createElement("h2");
+    var movieTitleEl = document.createElement("h3");
     var movieYearEl = document.createElement("p");
     var movieRatingEl = document.createElement("p");
     var movieImbdRatingEl = document.createElement("p");
     var movieMetaScoreEl = document.createElement("p");
+    var movieButtonEl = document.createElement("button");
+
+    movieButtonEl.setAttribute("id", moviesDetails[i].movieID);
+    movieButtonEl.classList = "btn-genre-item";
+
+    movieEl.classList = "genre-item";
+    movieEl.style.border = '1px solid black'; // just for testing
+    movieEl.style.margin = '5px'; // just for testing
+    movieEl.style.padding = '5px'; // just for testing
 
     movieTitleEl.textContent = `${moviesDetails[i].imbdTitle}`;
     movieYearEl.textContent = `${moviesDetails[i].imbdYear}`;
     movieRatingEl.textContent = `${moviesDetails[i].rating}`;
     movieImbdRatingEl.textContent = `IMBd rating: ${moviesDetails[i].imbdRating}/10`;
     movieMetaScoreEl.textContent = `metacritic metascore: ${moviesDetails[i].metaScore}/100`;
+    movieButtonEl.textContent = `Learn More`;
     
     movieEl.appendChild(movieTitleEl);
     movieEl.appendChild(movieYearEl);
     movieEl.appendChild(movieRatingEl);
     movieEl.appendChild(movieImbdRatingEl);
     movieEl.appendChild(movieMetaScoreEl);
+    movieEl.appendChild(movieButtonEl);
 
     genreResultsContainerEl.appendChild(movieEl);
-
-    // console.log(moviesDetails[i].movieID);
   }
   return;
 };
 
 
-// Function - Display saved / searched (?) movies on main page 
-// TO DO: Create function that will display saved/searched movies to main page
+// Function - Display searched movies on main page 
+// TO DO: Create function that will display searched movies to main page
 function saveSearch(id) {
   var search = movieTitleInput.value
   var searchID = id
@@ -371,17 +363,12 @@ function saveSearch(id) {
 
 
 
-
-
-
-
-
 // ---- Event listeners ---- 
 
 // TO DO: Create event listeners 
 // e.g. languageButtonsEl.addEventListener('click', buttonClickHandler);
 
-//Event listener for click on search button
+// Event listener for click on search button
 searchButton.addEventListener("click", function(event) {
   event.preventDefault()
   
@@ -393,14 +380,24 @@ searchButton.addEventListener("click", function(event) {
   //youtubeApi();
 })
 
+// Event listener for click on button for movies listed within genreResults-container
+function handleGenreMovieClick(event) {
+  event.preventDefault();
+
+  var element = event.target;
+
+  if (element.matches(".btn-genre-item")) {
+    genreMovieID = element.getAttribute("id");
+    console.log(`Mouse click on movie with id of: ${genreMovieID}`)
+  }
+  
+}
 
 
 
+// ---- Functions to call & event listeners  ---- 
 
+// TO DO: List any functions or event listeners that are to be called upon launch
 
+genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
 
-// ---- Functions to call  ---- 
-
-// TO DO: List any functions that are to be called upon main page load
-
-// getPopularByGenre();
