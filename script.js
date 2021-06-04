@@ -20,7 +20,7 @@
 // e.g. var [nameEl] = document.querySelector('#[id]');
 // TO DO: Add global variables that will reference DOM elements
 var movieTitleInput = document.querySelector("#movieTitle")
-var genreChoice = document.querySelector('#genreChoice')
+var genreChoiceEl = document.querySelector('#genreChoice')
 var searchButton = document.querySelector('#searchBtn')
 var searchHistoryEl = document.querySelector('#searchHistory')
 
@@ -155,9 +155,10 @@ function getGenreMovieDetails(searchResults) {
 // Function - Get top movies IDs by Genre
 // TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
 function getPopularByGenre() {
-  
-  var genreInput = 'horror'
-  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genreInput}`;   
+  console.log("here")
+  var genre = localStorage.getItem("genreChoice")
+  console.log(genre)
+  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genre}`;   
   var searchResults = [];
 
   fetch(requestUrl, {
@@ -172,7 +173,9 @@ function getPopularByGenre() {
     return response.json();
   })
   .then(function(data) {
-    // console.log(`In getPopularBy Genre function\n2 Top Movies in ${genreInput} Genre\n----------`);
+
+    console.log(`In getPopularBy Genre function\n2 Top Movies in ${genre} Genre\n----------`);
+
     // console.log(data);
     for (i=0; i < 2; i++) {
       searchResults[i] = data[i];
@@ -268,7 +271,7 @@ function getMovieReview (movieID) {
 
           let urlLink = data.metacritic.reviews[i].reviewUrl;
           // urlEl[index].innerHTML = "URL: "+urlLink
-          var criticUrl = {link: "<a href='"+urlLink+"'>"+urlLink+"</a>"}
+          var criticUrl = {link: "<a href='"+urlLink+"'>"+criticName+"</a>"}
           urlEl[index].innerHTML = criticUrl.link.valueOf()
           index++;
         }
@@ -367,6 +370,15 @@ function saveSearch(id) {
 // TO DO: Create event listeners 
 // e.g. languageButtonsEl.addEventListener('click', buttonClickHandler);
 
+genreChoiceEl.addEventListener("change", function(event) {
+  event.preventDefault()
+  window.location.replace("genre.html")
+  var genreChoice = genreChoiceEl.value
+  localStorage.setItem("genreChoice", genreChoice)
+  getPopularByGenre()
+
+})
+
 // Event listener for click on search button
 searchButton.addEventListener("click", function(event) {
   event.preventDefault()
@@ -401,4 +413,5 @@ function handleGenreMovieClick(event) {
 
 // TO DO: List any functions or event listeners that are to be called upon launch
 
-genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
+
+genreResultsContainerEl.addEventListener("click", handleGenreMovieClick){}

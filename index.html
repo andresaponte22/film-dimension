@@ -16,15 +16,29 @@
     <h1> The Film Dimension</h1>
   </header>
 
-  <main class="row">
-    <!-- ---------------LEFT SIDE COLUMN------------- -->
-    <!-- Column 1 Left Side: 2 Divs >> 1st Container the Inputs(Search & Options), 2nd Container the Search History -->
-    <section class="col s3">
-      <!-- Container 1 -->
-      <div id="userInput-container">
+  <main>
+    
+    <!-- ------------------TOP OF THE PAGE ACROSSS------------- -->
+    <!-- Movie Search Container -->
+    <section>
+      <div id="movieSearch-container">
         <input id="movieTitle" name="movieTitle" type=text placeholder="Movie Title"/>
+        <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
+      </div>
+
+      <div id="searchHistory-container">
+          <ul id="searchHistory">
+            <!-- APPEND OR DROP SEARCH QUERIES HERE THROUGH JAVASCRIPT >> Use LocalStorage -->
+          </ul>
+      </div>     
+    </section>
+
+    <!-------------------------- Column 1 LEFT SIDE: Genre Search Container------------------------>
+    <section>
+      
+      <div id="genreChoice-container">
+        
         <select id="genreChoice">
-          <option value="Choose Genre">Genres..</option>
           <option value="Action">Action</option>
           <option value="Adventure">Adventure</option>
           <option value="Animation">Animation</option>
@@ -45,23 +59,18 @@
           <option value="Thriller">Thriller</option>
           <option value="War">War</option>
           <option value="Western">Western</option>
-        </select>
-        <!-- <button type="submit" id="searchBtn">Search</button> -->
-        <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
-        <!-- <button class="btn waves-effect waves-light" type="submit" name="action" id="searchBtn">Submit -->
-          
-        </button>
-      </div>
-      <!-- Container 2 -->
-      <div id="searchHistory-container">
-        <ul id="searchHistory">
-          <!-- APPEND OR DROP SEARCH QUERIES HERE THROUGH JAVASCRIPT >> Use LocalStorage -->
-        </ul>
-      </div>
+        </select> 
+        <div id="genreResults-container">
+          <h2>Popular movies by genre</h2>
+            <!-- APPEND GENRE MOVIE RESULTS HERE THROUGH JAVASCRIPT -->
+        </div>
+      </div> 
     </section>
-    <!-- ---------------RIGHT SIDE COLUMN------------- -->
+
+
+    <!-- ----------------------------------RIGHT SIDE COLUMN------------------------------ -->
     <!-- COLUMN 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
-    <section class="col s6">
+    <section>
       <!-- Container1 -->
       <div id="movieTrailer-container"></div>
       
