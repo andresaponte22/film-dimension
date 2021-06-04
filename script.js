@@ -30,7 +30,7 @@ var reviewsEl = document.querySelectorAll(".reviews");
 var criticEl = document.querySelectorAll(".critic");
 var quoteEl = document.querySelectorAll(".quote");
 var urlEl = document.querySelectorAll(".url");
-
+var youtubeEl = document.querySelector("#movieTrailer-container")
 var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 // Global Variables
@@ -84,13 +84,15 @@ fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTi
 .then(function(data) {
   console.log(`youTube API \n----------`);
   console.log(data);
-  movieURL = data.items[1].link.split("https://www.youtube.com/watch?v=")[1];
+  movieURL = data.items[1].url.split("https://www.youtube.com/watch?v=")[1];
   console.log(`movieURL: ${movieURL}`);
   // embedded video to display on html
   var obj = {video: {
     value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
   }}
-  document.write(obj.video.value);
+  // youtubeEl.write(obj.video.value)
+  let youtubeValue = obj.video.value
+  youtubeEl.innerHTML = youtubeValue
 })
 .catch(err => {
 	console.error(err);
@@ -365,7 +367,7 @@ searchButton.addEventListener("click", function(event) {
   localStorage.setItem("movieTitle", movieTitle.value)
 
   getMovieID();
-  //youtubeApi();
+  youtubeApi();
 })
 
 // Event listener for buttons for movies listed within genreResults-container
@@ -385,7 +387,7 @@ function handleGenreMovieClick(event) {
   
   genreResultsContainerEl.innerHTML = "";
   getMovieReview(genreMovieID);
-  // youtubeApi();
+  youtubeApi();
 
   return;
 }
