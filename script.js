@@ -40,8 +40,8 @@ var pastSearches = [];
 var pastSearchesID = []
 
 // ENTER YOUR API KEYS BELOW BETWEEN THE SINGLE QUOTES - KEEP THE QUOTES - CAN BE THE SAME API KEY
-var apiKeyImbd = 'YOUR API KEY FOR IMBd API'
-var apiKeyYoutube = 'YOUR API KEY FOR YouTube Search Results API'
+var apiKeyImbd = '4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6'
+var apiKeyYoutube = '1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2'
 
 // ---- Functions ---- 
 
@@ -128,8 +128,11 @@ function getGenreMovieDetails(searchResults) {
         
         var movie = {
           imbdTitle: data.imdbrating.title,
+          imbdYear: data.imdbrating.year,
+          rating: data.certificate.certificate,
           imbdRating: data.imdbrating.rating,
-          metaScore: data.metacritic.metaScore
+          metaScore: data.metacritic.metaScore,
+          movieID: movieID
         }
         moviesDetails.push(movie)
         
@@ -323,18 +326,26 @@ function displayGenreResults (moviesDetails) {
     
     var movieEl = document.createElement("div");
     var movieTitleEl = document.createElement("h2");
+    var movieYearEl = document.createElement("p");
+    var movieRatingEl = document.createElement("p");
     var movieImbdRatingEl = document.createElement("p");
     var movieMetaScoreEl = document.createElement("p");
 
-    movieTitleEl.textContent = `Movie title: ${moviesDetails[i].imbdTitle}`;
-    movieImbdRatingEl.textContent = `Movie IMBd rating: ${moviesDetails[i].imbdRating}`;
-    movieMetaScoreEl.textContent = `Movie meta score: ${moviesDetails[i].metaScore}`;
+    movieTitleEl.textContent = `${moviesDetails[i].imbdTitle}`;
+    movieYearEl.textContent = `${moviesDetails[i].imbdYear}`;
+    movieRatingEl.textContent = `${moviesDetails[i].rating}`;
+    movieImbdRatingEl.textContent = `IMBd rating: ${moviesDetails[i].imbdRating}/10`;
+    movieMetaScoreEl.textContent = `metacritic metascore: ${moviesDetails[i].metaScore}/100`;
     
     movieEl.appendChild(movieTitleEl);
+    movieEl.appendChild(movieYearEl);
+    movieEl.appendChild(movieRatingEl);
     movieEl.appendChild(movieImbdRatingEl);
     movieEl.appendChild(movieMetaScoreEl);
 
     genreResultsContainerEl.appendChild(movieEl);
+
+    // console.log(moviesDetails[i].movieID);
   }
   return;
 };
