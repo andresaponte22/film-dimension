@@ -18,3 +18,11 @@ header > h1 {
 select {
     display: block;
 }
+
+#searchHistory {
+    display: inline;
+}
+
+span.rInline {
+    display: inline;
+}
