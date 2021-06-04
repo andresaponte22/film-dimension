@@ -38,8 +38,8 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 var pastSearches = [];
 var pastSearchesID = []
-var apiKeyImbd = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
-var apiKeyYoutube = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
+var apiKeyImbd = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
+var apiKeyYoutube = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
 
 
 // ---- Functions ---- 
@@ -340,11 +340,15 @@ function displayGenreResults (moviesDetails) {
 function saveSearch(id) {
   var search = movieTitleInput.value
   var searchID = id
-  pastSearches.push(search)
+  if (pastSearches.includes(search) === false) {
+    pastSearches.push(search)
   pastSearchesID.push(searchID)
   localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
   localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
   updateSearchHistory(search, searchID)
+  } else {
+    return
+  }
 }                   
 
 
