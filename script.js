@@ -30,7 +30,7 @@ var reviewsEl = document.querySelectorAll(".reviews");
 var criticEl = document.querySelectorAll(".critic");
 var quoteEl = document.querySelectorAll(".quote");
 var urlEl = document.querySelectorAll(".url");
-
+// var youtubeEl = document.querySelector("#movieTrailer-container")
 var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 // Global Variables
@@ -390,7 +390,7 @@ searchButton.addEventListener("click", function(event) {
   localStorage.setItem("movieTitle", movieTitle.value)
 
   getMovieID();
-  //youtubeApi();
+  youtubeApi();
 })
 
 
