@@ -38,10 +38,11 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 var pastSearches = [];
 var pastSearchesID = []
+var apiKeyImbd = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
+var apiKeyYoutube = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
 
-// ENTER YOUR API KEYS BELOW BETWEEN THE SINGLE QUOTES - KEEP THE QUOTES - CAN BE THE SAME API KEY
-var apiKeyImbd = '4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6'
-var apiKeyYoutube = '1d90138037mshd72dce2bb152a40p19e98ajsn12ed41b42bf2'
+
+
 
 // ---- Functions ---- 
 
@@ -278,10 +279,15 @@ function getMovieReview (movieID) {
 
 // Function - Update variables and localStorage related to saved/searched movie titles, then call function to display on page
 // TO DO: Create function that will update searched/saved movie list variables & localStorage then call funciton to update display on page
-function updateSearchHistory(search) {
+function updateSearchHistory(search, movieID) {
   searchList = document.createElement("li")
   searchList.appendChild(document.createTextNode(search))
-  searchHistoryEl.appendChild(searchList)
+  searchList.setAttribute("id", movieID)
+  searchList.addEventListener("click", function(event) {
+    console.log(event.target.getAttribute("id"))
+    getMovieReview(event.target.getAttribute("id"))
+  })
+  searchHistoryEl.prepend(searchList)
 }
 
 
@@ -360,7 +366,7 @@ function saveSearch(id) {
   pastSearchesID.push(searchID)
   localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
   localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
-  updateSearchHistory(search)
+  updateSearchHistory(search, searchID)
 }
 
 
@@ -384,7 +390,7 @@ searchButton.addEventListener("click", function(event) {
   localStorage.setItem("movieTitle", movieTitle.value)
 
   getMovieID();
-  youtubeApi();
+  //youtubeApi();
 })
 
 
