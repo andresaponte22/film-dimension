@@ -17,88 +17,102 @@
   </header>
 
   <main>
-    
     <!-- ------------------TOP OF THE PAGE ACROSSS------------- -->
     <!-- Movie Search Container -->
-    <section>
-      <div id="movieSearch-container">
+    <section class="row">
+      <div id="movieSearch-container" class="col s3">
         <input id="movieTitle" name="movieTitle" type=text placeholder="Movie Title"/>
         <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
       </div>
 
-      <div id="searchHistory-container">
-          <ul id="searchHistory">
+      <div id="searchHistory-container" class="col s9">
+          <ul id="searchHistory" class="flowtext">
             <!-- APPEND OR DROP SEARCH QUERIES HERE THROUGH JAVASCRIPT >> Use LocalStorage -->
           </ul>
       </div>     
     </section>
 
-    <!-------------------------- Column 1 LEFT SIDE: Genre Search Container------------------------>
-    <section>
-      
-      <div id="genreChoice-container">
-        
-        <select id="genreChoice">
-          <option value="Action">Action</option>
-          <option value="Adventure">Adventure</option>
-          <option value="Animation">Animation</option>
-          <option value="Biography">Biography</option>
-          <option value="Comedy">Comedy</option>
-          <option value="Crime">Crime</option>
-          <option value="Documentary">Documentary</option>
-          <option value="Drama">Drama</option>
-          <option value="Family">Family</option>
-          <option value="Fantasy">Fantasy</option>
-          <option value="Film-Noir">Film-Noir</option>
-          <option value="History">History</option>
-          <option value="Horror">Horror</option>
-          <option value="Music">Music</option>
-          <option value="Romance">Romance</option>
-          <option value="Sci-Fi">Sci-Fi</option>
-          <option value="Sport">Sport</option>
-          <option value="Thriller">Thriller</option>
-          <option value="War">War</option>
-          <option value="Western">Western</option>
-        </select> 
-        <div id="genreResults-container">
-          <h4>Popular movies by genre</h4>
-            <!-- APPEND GENRE MOVIE RESULTS HERE THROUGH JAVASCRIPT -->
-        </div>
-      </div> 
-    </section>
-
-
-    <!-- ----------------------------------RIGHT SIDE COLUMN------------------------------ -->
-    <!-- COLUMN 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
-    <section>
-      <!-- Container1 -->
-      <div id="movieTrailer-container"></div>
-      
-      <!-- Container2 -->
-      <div id="scores-reviews-container">
-        <!-- Scores Section -->
-        <div id="scoresRow">
-          <p id="metaScore"></p>
-          <p id="imdbScore"></p>
-        </div>
-
-        <!-- Review section -->
-        <div id="reviewsGrid"> <!--This will contain 2 divs, one for each review-->
-          <div class="reviews">
-            <p class="critic"></p>
-            <p class="url"></p>
-            <p class="quote"></p>
+    <div class="row" >
+      <div class="divider col s10 offset-s1"></div>
+    </div>
+    
+    <br>
+    <!-- Rest of the page. Div holds the two sections left side and ride -->
+    <div class="row" id="columnWrapper">   
+        <!-------------------------- Column 1 LEFT SIDE: Genre Search Container------------------------>  
+      <section class="col s4">
+        <div id="genreChoice-container">
+          
+          <select id="genreChoice">
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Animation">Animation</option>
+            <option value="Biography">Biography</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Crime">Crime</option>
+            <option value="Documentary">Documentary</option>
+            <option value="Drama">Drama</option>
+            <option value="Family">Family</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Film-Noir">Film-Noir</option>
+            <option value="History">History</option>
+            <option value="Horror">Horror</option>
+            <option value="Music">Music</option>
+            <option value="Romance">Romance</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Sport">Sport</option>
+            <option value="Thriller">Thriller</option>
+            <option value="War">War</option>
+            <option value="Western">Western</option>
+          </select> 
+          <div id="genreResults-container">
+            <blockquote>
+              <h3>Popular movies by genre</h3>
+            </blockquote>
+              <!-- APPEND GENRE MOVIE RESULTS HERE THROUGH JAVASCRIPT -->
           </div>
+        </div> 
+      </section>
+  
+  
+      <!-- ----------------------------------RIGHT SIDE COLUMN------------------------------ -->
+      <!-- COLUMN 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
+      <section class="col s8">
+        <!-- Container1 -->
+        <div id="movieTrailer-container"></div>
 
-          <div class="reviews">
-            <p class="critic"></p>
-            <p class="url"></p>
-            <p class="quote"></p>
+        <!-- Container2 -->
+        <div id="scores-reviews-container">
+          <!-- Scores Section -->
+          <div id="scoresRow">
+            <blockquote>
+              <span class="rInline"><p id="metaScore"></p></span>
+            </blockquote>
+            <blockquote>
+              <span class="rInline"><p id="imdbScore"></p></span>
+            </blockquote>
+
+          </div>
+          <br>
+          <!-- Review section -->
+          <div id="reviewsGrid"> <!--This will contain 2 divs, one for each review-->
+            <div class="reviews">
+              <p class="critic"></p>
+              <p class="url"></p>
+              <p class="quote flow-text"></p>
+            </div>
+            <br>
+            <div class="reviews">
+              <p class="critic"></p>
+              <p class="url"></p>
+              <p class="quote flow-text"></p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-    </section>
+    </div>
+   
   </main>
   <script src="script.js"></script>
 

@@ -250,15 +250,13 @@ function getMovieReview (movieID) {
         let index = 0;
         for (i=0; i < data.metacritic.reviews.length; i++) {
           
-          // reviewsEl.innerHTML = ""
-          let criticName = data.metacritic.reviews[i].reviewSite;
-          criticEl[index].innerHTML= criticName;
-
+          // Quote from Critic
           let quoteActual = data.metacritic.reviews[i].quote;
           quoteEl[index].innerHTML = '"'+quoteActual+'"';
 
+          // Critic Name Displayed as a Link to the Review
           let urlLink = data.metacritic.reviews[i].reviewUrl;
-          // urlEl[index].innerHTML = "URL: "+urlLink
+          let criticName = data.metacritic.reviews[i].reviewSite;
           var criticUrl = {link: "<a href='"+urlLink+"'>"+criticName+"</a>"}
           urlEl[index].innerHTML = criticUrl.link.valueOf()
           index++;
