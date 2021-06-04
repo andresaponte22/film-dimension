@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(to right, rgba(6, 14, 46, 0.671) , rgb(185, 229, 236));
+    padding: 1em;
+}
+
+header > h1 {
+    font-family: 'Limelight', cursive;
+    font-size: 4em;
+    -webkit-text-stroke: 2px #fff;
+}
+
+select {
+    display: block;
+}
