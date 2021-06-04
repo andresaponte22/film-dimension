@@ -38,8 +38,9 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 var pastSearches = [];
 var pastSearchesID = []
-var apiKey = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
+var apiKeyImbd = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
 var apiKeyYoutube = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
+
 
 
 // ---- Functions ---- 
@@ -105,7 +106,7 @@ function getGenreMovieDetails(searchResults) {
   var movieID;
   var moviesDetails = [];
 
-  console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
+  // console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
 
   for (i = 0; i < searchResults.length; i++) {
     movieID = searchResults[i];
@@ -115,7 +116,7 @@ function getGenreMovieDetails(searchResults) {
     fetch(requestUrl, {
     "method": "GET",
     "headers": {
-    "x-rapidapi-key": apiKey,
+    "x-rapidapi-key": apiKeyImbd,
     "x-rapidapi-host": "imdb8.p.rapidapi.com"
     }
     })
@@ -144,7 +145,6 @@ function getGenreMovieDetails(searchResults) {
 }
 
 // Function - Get top movies IDs by Genre
-// TO DO: Get top movies by genre from API, use movie IDs to then get useful info for search results listing
 // TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
 function getPopularByGenre() {
   
@@ -155,7 +155,7 @@ function getPopularByGenre() {
   fetch(requestUrl, {
     "method": "GET",
     "headers": {
-      "x-rapidapi-key": apiKey,
+      "x-rapidapi-key": apiKeyImbd,
       "x-rapidapi-host": "imdb8.p.rapidapi.com"
     }
   })
@@ -190,7 +190,7 @@ function getMovieID() {
     fetch(requestUrl, {
 	    "method": "GET",
 	    "headers": {
-		  "x-rapidapi-key": apiKey,
+		  "x-rapidapi-key": apiKeyImbd,
 		  "x-rapidapi-host": "imdb8.p.rapidapi.com"
 	  }
     })
@@ -223,7 +223,7 @@ function getMovieReview (movieID) {
     fetch(requestUrl, {
 	  "method": "GET",
 	  "headers": {
-		"x-rapidapi-key": apiKey,
+		"x-rapidapi-key": apiKeyImbd,
 		"x-rapidapi-host": "imdb8.p.rapidapi.com"
 	  }
     })
@@ -324,12 +324,8 @@ function updateSearchHistory(search, movieID) {
 
 function displayGenreResults (moviesDetails) {
 
-  // console.log(`Movies details: ${moviesDetails}`);
-  // console.log(`Movies details length: ${moviesDetails.length}`);
-
   for (var i = 0; i < moviesDetails.length; i++) {
-    console.log(`in the for loop`);
-    console.log(moviesDetails[i]);
+    
     var movieEl = document.createElement("div");
     var movieTitleEl = document.createElement("h2");
     var movieImbdRatingEl = document.createElement("p");
