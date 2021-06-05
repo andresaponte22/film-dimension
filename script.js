@@ -39,7 +39,7 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 var pastSearches = [];
 var pastSearchesID = []
 var apiKeyImbd = "85d6732c5dmsh40c484b3b3afddcp18c9afjsna308e42c1988"
-var apiKeyYoutube = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
+var apiKeyYoutube = "3598b8265cmsh45b2bdf797a68a4p11d2b1jsn8d213ce924ae"
 var movieTitle = movieTitleInput.value;
 
 // ---- Functions ---- 
@@ -68,11 +68,14 @@ var movieTitle = movieTitleInput.value;
 // Function - YouTube API fetch here - search the API
 // TO DO: Create YouTube API fetch
 
-function youtubeApi() {
+function youtubeApi(movie) {
 
   if (movieTitleInput.value) {
     movieTitle = movieTitleInput.value;
     console.log("movie title from search - not genre list")
+  } else {
+    movieTitle = movie
+    console.log('movie title from search history')
   }
 
   youtubeEl.innerHTML = '';
@@ -285,8 +288,9 @@ function updateSearchHistory(search, movieID) {
   searchList.appendChild(document.createTextNode(search))
   searchList.setAttribute("id", movieID)
   searchList.addEventListener("click", function(event) {
-    console.log(event.target.getAttribute("id"))
+    movieTitleInput.value = '' 
     getMovieReview(event.target.getAttribute("id"))
+    youtubeApi(search)
   })
   searchHistoryEl.prepend(searchList)
 }
@@ -349,7 +353,6 @@ function displayGenreResults (moviesDetails) {
 
 // Function - Display searched movies on main page 
 function saveSearch(id) {
-  console.log(`this goes last ${movieTitleInput.value}`)
   var search = movieTitleInput.value
   var searchID = id
   if (pastSearches.includes(search) === false) {
