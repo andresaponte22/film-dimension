@@ -40,7 +40,7 @@ var pastSearches = [];
 var pastSearchesID = []
 var apiKeyImbd = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
 var apiKeyYoutube = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
-
+var movieTitle = movieTitleInput.value;
 
 // ---- Functions ---- 
 
@@ -65,38 +65,49 @@ var apiKeyYoutube = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
 
 
 // ---- Functions to fetch API data  ---- 
-function youtubeApi() {
-  
 // Function - YouTube API fetch here - search the API
 // TO DO: Create YouTube API fetch
 
-fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": apiKeyYoutube,
-		"x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
-	}
-})
-.then(response => {
-	// console.log(response);
-  return response.json()
-})
-.then(function(data) {
-  console.log(`youTube API \n----------`);
-  console.log(data);
-  movieURL = data.items[1].url.split("https://www.youtube.com/watch?v=")[1];
-  console.log(`movieURL: ${movieURL}`);
-  // embedded video to display on html
-  var obj = {video: {
-    value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
-  }}
-  // youtubeEl.write(obj.video.value)
-  let youtubeValue = obj.video.value
-  youtubeEl.innerHTML = youtubeValue
-})
-.catch(err => {
-	console.error(err);
-});
+function youtubeApi() {
+
+  if (movieTitleInput.value) {
+    movieTitle = movieTitleInput.value;
+    console.log("movie title from search - not genre list")
+  }
+
+  youtubeEl.innerHTML = '';
+
+  fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitle} official trailer`, {
+  // fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": apiKeyYoutube,
+      "x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
+    }
+  })
+  .then(response => {
+    // console.log(response);
+    return response.json()
+  })
+  .then(function(data) {
+    console.log(`youTube API \n----------`);
+    console.log(data);
+    movieURL = data.items[1].url.split("https://www.youtube.com/watch?v=")[1];
+    console.log(`movieURL: ${movieURL}`);
+    // embedded video to display on html
+    var obj = {video: {
+      value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
+    }}
+    // youtubeEl.write(obj.video.value)
+    let youtubeValue = obj.video.value
+    youtubeEl.innerHTML = youtubeValue
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+  movieTitleInput.value = '';
+
 }
 
 // Function - get details of movies from popular by genre fetch request
@@ -154,10 +165,12 @@ function getGenreMovieDetails(searchResults) {
 // TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
 function getPopularByGenre() {
   
-  var genre = 'horror';
-  
-  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genre}`;   
-  var searchResults = [];
+  var genre = localStorage.getItem("genreChoice");
+
+  var searchResults = '';
+  searchResults = [];
+
+  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genre}`;
 
   fetch(requestUrl, {
     "method": "GET",
@@ -176,7 +189,7 @@ function getPopularByGenre() {
       searchResults[i] = data[i];
       searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
       searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
-      console.log(searchResults[i]);
+      // console.log(searchResults[i]);
     };
     getGenreMovieDetails(searchResults);
   })
@@ -215,8 +228,7 @@ function getMovieID() {
     });
 }
 
-// Function - get movie review results based on movieID
-// TO DO: Create function that gets movie review data
+// Function - get movie review results based on movieID & display
 function getMovieReview (movieID) {
 
     // Get review data for movie based on 'movieID' variable
@@ -273,7 +285,6 @@ function getMovieReview (movieID) {
 // ---- Function to update localStorage ---- 
 
 // Function - Update variables and localStorage related to saved/searched movie titles, then call function to display on page
-// TO DO: Create function that will update searched/saved movie list variables & localStorage then call funciton to update display on page
 function updateSearchHistory(search, movieID) {
   searchList = document.createElement("li")
   searchList.appendChild(document.createTextNode(search))
@@ -299,7 +310,7 @@ function displayGenreResults (moviesDetails) {
   for (var i = 0; i < moviesDetails.length; i++) {
     
     var movieEl = document.createElement("div");
-    var movieTitleEl = document.createElement("h3");
+    var movieTitleEl = document.createElement("h5");
     var movieYearEl = document.createElement("p");
     // var movieRatingEl = document.createElement("p");
     var movieImbdRatingEl = document.createElement("p");
@@ -309,12 +320,17 @@ function displayGenreResults (moviesDetails) {
     movieButtonEl.setAttribute("genre-id", moviesDetails[i].movieID);
     movieButtonEl.setAttribute("genre-title", moviesDetails[i].imbdTitle);
 
-    movieButtonEl.classList = "btn-genre-item";
+    movieButtonEl.classList = "btn-genre-item waves-effect waves-light btn-small";
+    movieTitleEl.classList = "genre-title";
 
     movieEl.classList = "genre-item";
-    movieEl.style.border = '1px solid black'; // just for testing
-    movieEl.style.margin = '5px'; // just for testing
-    movieEl.style.padding = '5px'; // just for testing
+    movieEl.style.color = '#26a69a'
+    movieEl.style.backgroundColor = 'white';
+    movieEl.style.border = '1px solid #26a69a';
+    movieEl.style.borderRadius = '10px';
+    movieEl.style.margin = '10px';  
+    movieEl.style.padding = '5px';
+    movieEl.style.color = '#26a69a';
 
     movieTitleEl.textContent = `${moviesDetails[i].imbdTitle}`;
     movieYearEl.textContent = `${moviesDetails[i].imbdYear}`;
@@ -357,7 +373,8 @@ function saveSearch(id) {
 // Event listener for dropdown menu of different genres
 genreChoiceEl.addEventListener("change", function(event) {
   event.preventDefault()
-  var genreChoice = genreChoiceEl.value
+  var genreChoice = genreChoiceEl.value;
+  genreChoice = genreChoice.toLowerCase();
   localStorage.setItem("genreChoice", genreChoice)
   getPopularByGenre()
 })
@@ -366,6 +383,8 @@ genreChoiceEl.addEventListener("change", function(event) {
 searchButton.addEventListener("click", function(event) {
   event.preventDefault()
   
+  genreResultsContainerEl.innerHTML = "";
+
   var movieTitle = document.querySelector("#movieTitle")
 
   localStorage.setItem("movieTitle", movieTitle.value)
@@ -385,14 +404,13 @@ function handleGenreMovieClick(event) {
   if (element.matches(".btn-genre-item")) {
     genreMovieID = element.getAttribute("genre-id");
     genreMovieTitle = element.getAttribute("genre-title");
-    // console.log(`Mouse click on movie with id of: ${genreMovieID}`)
-    // console.log(`Mouse click on movie with title of: ${genreMovieTitle}`)
-  }
-  
-  genreResultsContainerEl.innerHTML = "";
-  getMovieReview(genreMovieID);
-  youtubeApi();
+    
+    movieTitle = genreMovieTitle;
+    genreResultsContainerEl.innerHTML = "";
 
+    getMovieReview(genreMovieID);
+    youtubeApi(movieTitle);
+  }
   return;
 }
 
