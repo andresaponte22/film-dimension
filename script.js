@@ -38,7 +38,7 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 var pastSearches = [];
 var pastSearchesID = []
-var apiKeyImbd = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
+var apiKeyImbd = "85d6732c5dmsh40c484b3b3afddcp18c9afjsna308e42c1988"
 var apiKeyYoutube = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
 var movieTitle = movieTitleInput.value;
 
@@ -78,7 +78,6 @@ function youtubeApi() {
   youtubeEl.innerHTML = '';
 
   fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitle} official trailer`, {
-  // fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
     "method": "GET",
     "headers": {
       "x-rapidapi-key": apiKeyYoutube,
@@ -86,7 +85,6 @@ function youtubeApi() {
     }
   })
   .then(response => {
-    // console.log(response);
     return response.json()
   })
   .then(function(data) {
@@ -105,14 +103,11 @@ function youtubeApi() {
   .catch(err => {
     console.error(err);
   });
-
-  movieTitleInput.value = '';
-
 }
 
 // Function - get details of movies from popular by genre fetch request
 function getGenreMovieDetails(searchResults) {
-  
+  movieTitleInput.value = '';
   var movieID;
   var moviesDetails = [];
 
@@ -354,14 +349,15 @@ function displayGenreResults (moviesDetails) {
 
 // Function - Display searched movies on main page 
 function saveSearch(id) {
+  console.log(`this goes last ${movieTitleInput.value}`)
   var search = movieTitleInput.value
   var searchID = id
   if (pastSearches.includes(search) === false) {
     pastSearches.push(search)
-  pastSearchesID.push(searchID)
-  localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
-  localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
-  updateSearchHistory(search, searchID)
+    pastSearchesID.push(searchID)
+    localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
+    localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
+    updateSearchHistory(search, searchID)
   } else {
     return
   }
