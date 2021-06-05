@@ -30,7 +30,7 @@ var reviewsEl = document.querySelectorAll(".reviews");
 var criticEl = document.querySelectorAll(".critic");
 var quoteEl = document.querySelectorAll(".quote");
 var urlEl = document.querySelectorAll(".url");
-
+var youtubeEl = document.querySelector("#movieTrailer-container")
 var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 // Global Variables
@@ -38,11 +38,9 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 var pastSearches = [];
 var pastSearchesID = []
-var apiKeyImbd = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
-var apiKeyYoutube = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
-
-
-
+var apiKeyImbd = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
+var apiKeyYoutube = "bc096f50e2msh505f1567ba087eep1e8079jsnd587a87fa45a"
+var movieTitle = movieTitleInput.value;
 
 // ---- Functions ---- 
 
@@ -66,39 +64,50 @@ var apiKeyYoutube = "4af631511cmshe08bfc562179f87p1a3a88jsn793962d703e6"
 
 
 
-
-
 // ---- Functions to fetch API data  ---- 
-function youtubeApi() {
-  
 // Function - YouTube API fetch here - search the API
 // TO DO: Create YouTube API fetch
 
-fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": apiKeyYoutube,
-		"x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
-	}
-})
-.then(response => {
-	// console.log(response);
-  return response.json()
-})
-.then(function(data) {
-  console.log(`youTube API \n----------`);
-  console.log(data);
-  movieURL = data.items[1].link.split("https://www.youtube.com/watch?v=")[1];
-  console.log(`movieURL: ${movieURL}`);
-  // embedded video to display on html
-  var obj = {video: {
-    value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
-  }}
-  document.write(obj.video.value);
-})
-.catch(err => {
-	console.error(err);
-});
+function youtubeApi() {
+
+  if (movieTitleInput.value) {
+    movieTitle = movieTitleInput.value;
+    console.log("movie title from search - not genre list")
+  }
+
+  youtubeEl.innerHTML = '';
+
+  fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitle} official trailer`, {
+  // fetch(`https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${movieTitleInput.value} official trailer`, {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": apiKeyYoutube,
+      "x-rapidapi-host": "youtube-search-results.p.rapidapi.com"
+    }
+  })
+  .then(response => {
+    // console.log(response);
+    return response.json()
+  })
+  .then(function(data) {
+    console.log(`youTube API \n----------`);
+    console.log(data);
+    movieURL = data.items[1].url.split("https://www.youtube.com/watch?v=")[1];
+    console.log(`movieURL: ${movieURL}`);
+    // embedded video to display on html
+    var obj = {video: {
+      value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
+    }}
+    // youtubeEl.write(obj.video.value)
+    let youtubeValue = obj.video.value
+    youtubeEl.innerHTML = youtubeValue
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+  movieTitleInput.value = '';
+
 }
 
 // Function - get details of movies from popular by genre fetch request
@@ -130,9 +139,9 @@ function getGenreMovieDetails(searchResults) {
         var movie = {
           imbdTitle: data.imdbrating.title,
           imbdYear: data.imdbrating.year,
-          rating: data.certificate.certificate,
+          // rating: data.certificate.certificate,
           imbdRating: data.imdbrating.rating,
-          metaScore: data.metacritic.metaScore,
+          // metaScore: data.metacritic.metaScore,
           movieID: data.imdbrating.id
         }
 
@@ -155,11 +164,13 @@ function getGenreMovieDetails(searchResults) {
 // Function - Get top movies IDs by Genre
 // TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
 function getPopularByGenre() {
-  console.log("here")
-  var genre = localStorage.getItem("genreChoice")
-  console.log(genre)
-  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genre}`;   
-  var searchResults = [];
+  
+  var genre = localStorage.getItem("genreChoice");
+
+  var searchResults = '';
+  searchResults = [];
+
+  var requestUrl = `https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F${genre}`;
 
   fetch(requestUrl, {
     "method": "GET",
@@ -169,17 +180,16 @@ function getPopularByGenre() {
     }
   })
   .then(response => {
-    // console.log(response);
     return response.json();
   })
   .then(function(data) {
-    console.log(`In getPopularBy Genre function\n2 Top Movies in ${genre} Genre\n----------`);
+    // console.log(`In getPopularBy Genre function\n2 Top Movies in ${genre} Genre\n----------`);
     // console.log(data);
-    for (i=0; i < 2; i++) {
+    for (i=0; i < 3; i++) {
       searchResults[i] = data[i];
       searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
       searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
-      console.log(searchResults[i]);
+      // console.log(searchResults[i]);
     };
     getGenreMovieDetails(searchResults);
   })
@@ -218,8 +228,7 @@ function getMovieID() {
     });
 }
 
-// Function - get movie review results based on movieID
-// TO DO: Create function that gets movie review data
+// Function - get movie review results based on movieID & display
 function getMovieReview (movieID) {
 
     // Get review data for movie based on 'movieID' variable
@@ -235,18 +244,16 @@ function getMovieReview (movieID) {
 	  }
     })
     .then(response => {
-	    // console.log(response);
-      return response.json();
+	    return response.json();
     })
     .then(function(data) {
         console.log(data);
         
         metaScore = data.metacritic.metaScore;
-        console.log(`metaScore: ${metaScore}`);
+        // console.log(`metaScore: ${metaScore}`);
         
-
         imbdRating = data.imdbrating.rating;
-        console.log(`IMBd rating: ${imbdRating}`);
+        // console.log(`IMBd rating: ${imbdRating}`);
 
         // DISPLAY CRITIC SCORES***--------------
         metaScoreEl.innerHTML = "Metascore: "+data.metacritic.metaScore;
@@ -273,13 +280,11 @@ function getMovieReview (movieID) {
     .catch(err => {
 	    console.error(err);
     });
-
 }
 
 // ---- Function to update localStorage ---- 
 
 // Function - Update variables and localStorage related to saved/searched movie titles, then call function to display on page
-// TO DO: Create function that will update searched/saved movie list variables & localStorage then call funciton to update display on page
 function updateSearchHistory(search, movieID) {
   searchList = document.createElement("li")
   searchList.appendChild(document.createTextNode(search))
@@ -291,55 +296,54 @@ function updateSearchHistory(search, movieID) {
   searchHistoryEl.prepend(searchList)
 }
 
-
-
-
-
-
-
-
 // ---- Functions to update display on pages ---- 
 
-// Function - Display movie listing based on genre results on second page, clickable movie info
-// TO DO: Create function that will add API movie list based on genre, clickable to display on main page
-
+// Function - Display movie listing based on genre results, clickable movie info
 function displayGenreResults (moviesDetails) {
 
   // TO DO: Add code to display dummy results if avoiding fetch request within getGenreMovieDetails function 
   // <div id="tt8332922"><h2>A Quiet Place Part II</h2><p>2020</p><p>14A</p><p>IMBd rating: 7.9/10</p><p>metacritic metascore: 71/100</p></div>
   
+  genreResultsContainerEl.innerHTML = "";
 
   // To display actual results
   for (var i = 0; i < moviesDetails.length; i++) {
     
     var movieEl = document.createElement("div");
-    var movieTitleEl = document.createElement("h3");
+    var movieTitleEl = document.createElement("h5");
     var movieYearEl = document.createElement("p");
-    var movieRatingEl = document.createElement("p");
+    // var movieRatingEl = document.createElement("p");
     var movieImbdRatingEl = document.createElement("p");
-    var movieMetaScoreEl = document.createElement("p");
+    // var movieMetaScoreEl = document.createElement("p");
     var movieButtonEl = document.createElement("button");
 
-    movieButtonEl.setAttribute("id", moviesDetails[i].movieID);
-    movieButtonEl.classList = "btn-genre-item";
+    movieButtonEl.setAttribute("genre-id", moviesDetails[i].movieID);
+    movieButtonEl.setAttribute("genre-title", moviesDetails[i].imbdTitle);
+
+    movieButtonEl.classList = "btn-genre-item waves-effect waves-light btn-small";
+    movieTitleEl.classList = "genre-title";
 
     movieEl.classList = "genre-item";
-    movieEl.style.border = '1px solid black'; // just for testing
-    movieEl.style.margin = '5px'; // just for testing
-    movieEl.style.padding = '5px'; // just for testing
+    movieEl.style.color = '#26a69a'
+    movieEl.style.backgroundColor = 'white';
+    movieEl.style.border = '1px solid #26a69a';
+    movieEl.style.borderRadius = '10px';
+    movieEl.style.margin = '10px';  
+    movieEl.style.padding = '5px';
+    movieEl.style.color = '#26a69a';
 
     movieTitleEl.textContent = `${moviesDetails[i].imbdTitle}`;
     movieYearEl.textContent = `${moviesDetails[i].imbdYear}`;
-    movieRatingEl.textContent = `${moviesDetails[i].rating}`;
+    // movieRatingEl.textContent = `${moviesDetails[i].rating}`;
     movieImbdRatingEl.textContent = `IMBd rating: ${moviesDetails[i].imbdRating}/10`;
-    movieMetaScoreEl.textContent = `metacritic metascore: ${moviesDetails[i].metaScore}/100`;
+    // movieMetaScoreEl.textContent = `metacritic metascore: ${moviesDetails[i].metaScore}/100`;
     movieButtonEl.textContent = `Learn More`;
     
     movieEl.appendChild(movieTitleEl);
     movieEl.appendChild(movieYearEl);
-    movieEl.appendChild(movieRatingEl);
+    // movieEl.appendChild(movieRatingEl);
     movieEl.appendChild(movieImbdRatingEl);
-    movieEl.appendChild(movieMetaScoreEl);
+    // movieEl.appendChild(movieMetaScoreEl);
     movieEl.appendChild(movieButtonEl);
 
     genreResultsContainerEl.appendChild(movieEl);
@@ -349,62 +353,68 @@ function displayGenreResults (moviesDetails) {
 
 
 // Function - Display searched movies on main page 
-// TO DO: Create function that will display searched movies to main page
 function saveSearch(id) {
   var search = movieTitleInput.value
   var searchID = id
-  pastSearches.push(search)
+  if (pastSearches.includes(search) === false) {
+    pastSearches.push(search)
   pastSearchesID.push(searchID)
   localStorage.setItem("searchHistoryTitle", JSON.stringify(pastSearches))
   localStorage.setItem("searchHistoryID", JSON.stringify(pastSearchesID))
   updateSearchHistory(search, searchID)
+  } else {
+    return
+  }
 }                   
 
 
 
 // ---- Event listeners ---- 
-
-// TO DO: Create event listeners 
-// e.g. languageButtonsEl.addEventListener('click', buttonClickHandler);
-
+// Event listener for dropdown menu of different genres
 genreChoiceEl.addEventListener("change", function(event) {
   event.preventDefault()
-  var genreChoice = genreChoiceEl.value
+  var genreChoice = genreChoiceEl.value;
+  genreChoice = genreChoice.toLowerCase();
   localStorage.setItem("genreChoice", genreChoice)
   getPopularByGenre()
-
 })
 
 // Event listener for click on search button
 searchButton.addEventListener("click", function(event) {
   event.preventDefault()
   
+  genreResultsContainerEl.innerHTML = "";
+
   var movieTitle = document.querySelector("#movieTitle")
 
   localStorage.setItem("movieTitle", movieTitle.value)
 
   getMovieID();
-  //youtubeApi();
+  youtubeApi();
 })
 
-// Event listener for click on button for movies listed within genreResults-container
+// Event listener for buttons for movies listed within genreResults-container
 function handleGenreMovieClick(event) {
   event.preventDefault();
 
   var element = event.target;
+  var genreMovieID;
+  var genreMovieTitle;
 
   if (element.matches(".btn-genre-item")) {
-    genreMovieID = element.getAttribute("id");
-    console.log(`Mouse click on movie with id of: ${genreMovieID}`)
+    genreMovieID = element.getAttribute("genre-id");
+    genreMovieTitle = element.getAttribute("genre-title");
+    
+    movieTitle = genreMovieTitle;
+    genreResultsContainerEl.innerHTML = "";
+
+    getMovieReview(genreMovieID);
+    youtubeApi(movieTitle);
   }
-  
+  return;
 }
 
-
-
 // ---- Functions to call & event listeners  ---- 
-
 // TO DO: List any functions or event listeners that are to be called upon launch
 
-//genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
-
+genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
