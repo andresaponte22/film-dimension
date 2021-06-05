@@ -7,14 +7,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="./images/Movie_icon.png">
+
+  
   <title>Film Dimension</title>
 </head>
 <body>
+  <style>
+    body {
+      font-family: "Audiowide", sans-serif;
+    }
+    </style>
+  
   <header>
-    <h1> The Film Dimension</h1>
+    <div class="transbox">
+      <h1 class="header-title"> The Film Dimension</h1>
+    </div>
   </header>
+
 
   <main>
     <!-- ------------------TOP OF THE PAGE ACROSSS------------- -->
@@ -22,7 +36,8 @@
     <section class="row">
       <div id="movieSearch-container" class="col s3">
         <input id="movieTitle" name="movieTitle" type=text placeholder="Movie Title"/>
-        <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
+        <a class="waves-effect waves-light btn blue-grey darken-3 btn"><i class="material-icons left">movie</i>Search</a>
+        <!-- <a class="waves-effect waves-light btn" id="searchBtn">Search</a> -->
       </div>
 
       <div id="searchHistory-container" class="col s9">
@@ -79,7 +94,9 @@
       <!-- COLUMN 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
       <section class="col s8">
         <!-- Container1 -->
-        <div id="movieTrailer-container"></div>
+        <div id="movieTrailer-container">
+          <img src="../super-team-project/images/Youtube_logo.jpg" height="300px" width="375px" alt="Movie Icon">
+        </div>
         
         <!-- Container2 -->
         <div id="scores-reviews-container">
@@ -112,10 +129,18 @@
 
     </div>
    
+
+    <div class = "iris">
+      <div class = "card transparent z-depth-5">
+      </div>
+   </div>
+
   </main>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="script.js"></script>
 
 </body>
+
 
 
 </html>

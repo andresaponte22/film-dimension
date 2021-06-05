@@ -1,19 +1,65 @@
 * {
     margin: 0;
 }
+body{
+    background: url("./images/clipboard.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 
+div.transbox {
+    position: relative; 
+    height: 10vh;
+    width: 100%;
+    display: flex;
+   align-items: center;
+    justify-content: start; 
+  }
+  div.transbox::before{
+    content: "";
+    background-image: url("/images/Movie_banner.png");
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.95;
+    background-size: contain;
+  }
+  
+  div.transbox p {
+    margin: 5%;
+    font-weight: bold;
+    color:white;
+  }
 header {
     display: flex;
-    justify-content: center;
-    background-image: linear-gradient(to right, rgba(6, 14, 46, 0.671) , rgb(185, 229, 236));
+    justify-content: start;
+    background-image: linear-gradient(to right, white(6, 14, 46, 0.671) , rgb(185, 229, 236));
     padding: 1em;
+    background-image: url(../super-team-project/images/Movie_banner.png);
+    background-size:contain;
+    border-bottom: white solid;
+    
+    
 }
 
 header > h1 {
-    font-family: 'Limelight', cursive;
-    font-size: 4em;
-    -webkit-text-stroke: 2px #fff;
+    font-family:  "Audiowide", sans-serif;
+    -webkit-text-stroke: 2px white;
+    position: relative;
+  color:white;  
+  font-size: 4rem;
+  line-height: 0.9;
+  /* text-align: center; */
 }
+/* .header-title{
+    background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+} */
 
 select {
     display: block;
@@ -25,4 +71,38 @@ select {
 
 span.rInline {
     display: inline;
+}
+#searchHistory-container{
+    display: block;
+    border:white;
+    border-style: solid;
+    margin-top: 10px;
+    width: auto;
+}
+
+#movieTrailer-container{
+    display: block;
+    border:white;
+    border-style: solid;
+    margin-top: 10px;
+    width: auto;
+    border-radius: 0.30rem;
+}
+#reviewsGrid{
+    display: block;
+    border:white;
+    border-style: solid;
+    margin-top: 10px;
+    width: auto; 
+}
+
+#genreResults-container{
+    height: 400px;
+    border-radius: 0.30rem;
+    
+
+
+}
+#genreResults-container h3{
+   color: white;
 }
