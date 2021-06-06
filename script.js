@@ -38,15 +38,16 @@ var movieTitle = movieTitleInput.value;
 // ---- Functions ---- 
 
 // ---- Functions to fetch API data  ---- 
+
 // Function - YouTube API fetch here - search the API
 function youtubeApi(movie) {
 
   if (movieTitleInput.value) {
+    // Movie title from search - not genre list
     movieTitle = movieTitleInput.value;
-    console.log("movie title from search - not genre list")
   } else {
-    movieTitle = movie
-    console.log('movie title from search history')
+    // Movie title from search history
+    movieTitle = movie;
   }
 
   youtubeEl.innerHTML = '';
@@ -62,10 +63,9 @@ function youtubeApi(movie) {
     return response.json()
   })
   .then(function(data) {
-    console.log(`youTube API \n----------`);
-    console.log(data);
+  
     movieURL = data.items[1].url.split("https://www.youtube.com/watch?v=")[1];
-    console.log(`movieURL: ${movieURL}`);
+    
     // embedded video to display on html
     var obj = {video: {
       value: `<iframe title='YouTube video player' type=\"text/html\" width='640' height='390' src='http://www.youtube.com/embed/${movieURL}' frameborder='0' allowFullScreen></iframe>`
@@ -146,13 +146,12 @@ function getPopularByGenre() {
     return response.json();
   })
   .then(function(data) {
-    // console.log(`In getPopularBy Genre function\n4 Top Movies in ${genre} Genre\n----------`);
-    // console.log(data);
+    
+    // Assign movie IDs of a few popular movies from a user identified genre to an array
     for (i=0; i < 4; i++) {
       searchResults[i] = data[i];
       searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
       searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
-      // console.log(searchResults[i]);
     };
     getGenreMovieDetails(searchResults);
   })
@@ -179,11 +178,9 @@ function getMovieID() {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
         movieID = data.d[0].id;
         getMovieReview(movieID);
         saveSearch(movieID)
-
     })
     .catch(err => {
 	    console.error(err);
@@ -209,13 +206,9 @@ function getMovieReview (movieID) {
 	    return response.json();
     })
     .then(function(data) {
-        console.log(data);
         
-        metaScore = data.metacritic.metaScore;
-        // console.log(`metaScore: ${metaScore}`);
-        
+        metaScore = data.metacritic.metaScore;      
         imbdRating = data.imdbrating.rating;
-        // console.log(`IMBd rating: ${imbdRating}`);
 
         // DISPLAY CRITIC SCORES***--------------
         metaScoreEl.innerHTML = "Metascore: "+data.metacritic.metaScore;
@@ -272,9 +265,7 @@ function displayGenreResults (moviesDetails) {
     var movieEl = document.createElement("div");
     var movieTitleEl = document.createElement("h5");
     var movieYearEl = document.createElement("p");
-    // var movieRatingEl = document.createElement("p");
     var movieImbdRatingEl = document.createElement("p");
-    // var movieMetaScoreEl = document.createElement("p");
     var movieButtonEl = document.createElement("button");
 
     movieButtonEl.setAttribute("genre-id", moviesDetails[i].movieID);
@@ -285,8 +276,6 @@ function displayGenreResults (moviesDetails) {
 
     movieEl.classList = "genre-item";
     movieEl.style.color = '#00acc1'
-    // movieEl.style.backgroundColor = 'white';
-    // movieEl.style.border = '1px solid #26a69a';
     movieEl.style.borderRadius = '10px';
     movieEl.style.margin = '10px';  
     movieEl.style.padding = '5px';
@@ -294,16 +283,12 @@ function displayGenreResults (moviesDetails) {
 
     movieTitleEl.textContent = `${moviesDetails[i].imbdTitle}`;
     movieYearEl.textContent = `${moviesDetails[i].imbdYear}`;
-    // movieRatingEl.textContent = `${moviesDetails[i].rating}`;
     movieImbdRatingEl.textContent = `IMBd rating: ${moviesDetails[i].imbdRating}/10`;
-    // movieMetaScoreEl.textContent = `metacritic metascore: ${moviesDetails[i].metaScore}/100`;
     movieButtonEl.textContent = `Learn More`;
     
     movieEl.appendChild(movieTitleEl);
     movieEl.appendChild(movieYearEl);
-    // movieEl.appendChild(movieRatingEl);
     movieEl.appendChild(movieImbdRatingEl);
-    // movieEl.appendChild(movieMetaScoreEl);
     movieEl.appendChild(movieButtonEl);
 
     genreResultsContainerEl.appendChild(movieEl);
@@ -328,8 +313,8 @@ function saveSearch(id) {
 }                   
 
 
-
 // ---- Event listeners ---- 
+
 // Event listener for dropdown menu of different genres
 genreChoiceEl.addEventListener("change", function(event) {
   event.preventDefault()
@@ -375,6 +360,5 @@ function handleGenreMovieClick(event) {
 }
 
 // ---- Functions to call & event listeners  ---- 
-// TO DO: List any functions or event listeners that are to be called upon launch
 
 genreResultsContainerEl.addEventListener("click", handleGenreMovieClick);
