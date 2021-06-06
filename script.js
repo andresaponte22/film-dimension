@@ -38,8 +38,8 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 var pastSearches = [];
 var pastSearchesID = []
-var apiKeyImbd = "85d6732c5dmsh40c484b3b3afddcp18c9afjsna308e42c1988"
-var apiKeyYoutube = "3598b8265cmsh45b2bdf797a68a4p11d2b1jsn8d213ce924ae"
+var apiKeyImbd = "3598b8265cmsh45b2bdf797a68a4p11d2b1jsn8d213ce924ae"
+var apiKeyYoutube = "85d6732c5dmsh40c484b3b3afddcp18c9afjsna308e42c1988"
 var movieTitle = movieTitleInput.value;
 
 // ---- Functions ---- 
@@ -316,17 +316,17 @@ function displayGenreResults (moviesDetails) {
     movieButtonEl.setAttribute("genre-id", moviesDetails[i].movieID);
     movieButtonEl.setAttribute("genre-title", moviesDetails[i].imbdTitle);
 
-    movieButtonEl.classList = "btn-genre-item waves-effect waves-light btn-small";
+    movieButtonEl.classList = "btn-genre-item waves-effect waves-light btn-small cyan darken-1 btn";
     movieTitleEl.classList = "genre-title";
 
     movieEl.classList = "genre-item";
-    movieEl.style.color = '#26a69a'
-    movieEl.style.backgroundColor = 'white';
-    movieEl.style.border = '1px solid #26a69a';
+    movieEl.style.color = '#00acc1'
+    // movieEl.style.backgroundColor = 'white';
+    // movieEl.style.border = '1px solid #26a69a';
     movieEl.style.borderRadius = '10px';
     movieEl.style.margin = '10px';  
     movieEl.style.padding = '5px';
-    movieEl.style.color = '#26a69a';
+    movieEl.style.color = '#00acc1';
 
     movieTitleEl.textContent = `${moviesDetails[i].imbdTitle}`;
     movieYearEl.textContent = `${moviesDetails[i].imbdYear}`;
