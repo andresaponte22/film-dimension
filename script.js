@@ -10,15 +10,10 @@
  * - list functions to call upon page load
  */
 
-
-
-
-
 // ---- Variable declarations ---- 
 
 // Reference to important DOM elements
 // e.g. var [nameEl] = document.querySelector('#[id]');
-// TO DO: Add global variables that will reference DOM elements
 var movieTitleInput = document.querySelector("#movieTitle")
 var genreChoiceEl = document.querySelector('#genreChoice')
 var searchButton = document.querySelector('#searchBtn')
@@ -34,8 +29,6 @@ var youtubeEl = document.querySelector("#movieTrailer-container")
 var genreResultsContainerEl = document.querySelector("#genreResults-container");
 
 // Global Variables
-// TO DO: Define any variables with global scope excluding those referencing DOM elements already noted above
-
 var pastSearches = [];
 var pastSearchesID = []
 var apiKeyImbd = "3598b8265cmsh45b2bdf797a68a4p11d2b1jsn8d213ce924ae"
@@ -44,30 +37,8 @@ var movieTitle = movieTitleInput.value;
 
 // ---- Functions ---- 
 
-// Function - Initialise web app
-// TO DO: Create function that is run when page first loaded, e.g., get localStorage.
-
-
-
-
-
-
-
-
-
-// ---- Functions to handle user form submissions ---- 
-
-// Function - Handle form / search submit including calling search APIs
-// TO DO: Create function that handles user submission (e.g., get movie title OR genre, check not blank, call APIs)
-
-
-
-
-
 // ---- Functions to fetch API data  ---- 
 // Function - YouTube API fetch here - search the API
-// TO DO: Create YouTube API fetch
-
 function youtubeApi(movie) {
 
   if (movieTitleInput.value) {
@@ -114,9 +85,6 @@ function getGenreMovieDetails(searchResults) {
   var movieID;
   var moviesDetails = [];
 
-  // console.log(`In getGenreMovieDetails\nSearch results movie details\n----------`);
-  // console.log(searchResults);
-
   for (i = 0; i < searchResults.length; i++) {
     movieID = searchResults[i];
 
@@ -137,9 +105,7 @@ function getGenreMovieDetails(searchResults) {
         var movie = {
           imbdTitle: data.imdbrating.title,
           imbdYear: data.imdbrating.year,
-          // rating: data.certificate.certificate,
           imbdRating: data.imdbrating.rating,
-          // metaScore: data.metacritic.metaScore,
           movieID: data.imdbrating.id
         }
 
@@ -160,7 +126,6 @@ function getGenreMovieDetails(searchResults) {
 }
 
 // Function - Get top movies IDs by Genre
-// TO DO: Increase number of movies included in searchResults once overall working - currently trying to limit API requests
 function getPopularByGenre() {
   
   var genre = localStorage.getItem("genreChoice");
@@ -197,7 +162,6 @@ function getPopularByGenre() {
 }
 
 // Function - Get Movie ID - search the API
-// TO DO: Create movie database API fetch to get movie ID based on user movie title input
 function getMovieID() {
 
     var movieID;
