@@ -181,9 +181,9 @@ function getPopularByGenre() {
     return response.json();
   })
   .then(function(data) {
-    // console.log(`In getPopularBy Genre function\n2 Top Movies in ${genre} Genre\n----------`);
+    // console.log(`In getPopularBy Genre function\n4 Top Movies in ${genre} Genre\n----------`);
     // console.log(data);
-    for (i=0; i < 3; i++) {
+    for (i=0; i < 4; i++) {
       searchResults[i] = data[i];
       searchResults[i] = searchResults[i].slice(7); // remove "/title/" from results string
       searchResults[i] = searchResults[i].substring(0, searchResults[i].length - 1); // remove "/" at end of string to get movie ID on its own
@@ -300,9 +300,6 @@ function updateSearchHistory(search, movieID) {
 // Function - Display movie listing based on genre results, clickable movie info
 function displayGenreResults (moviesDetails) {
 
-  // TO DO: Add code to display dummy results if avoiding fetch request within getGenreMovieDetails function 
-  // <div id="tt8332922"><h2>A Quiet Place Part II</h2><p>2020</p><p>14A</p><p>IMBd rating: 7.9/10</p><p>metacritic metascore: 71/100</p></div>
-  
   genreResultsContainerEl.innerHTML = "";
 
   // To display actual results
