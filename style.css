@@ -16,12 +16,10 @@ div.transbox {
     width: 100%;
     display: flex;
    align-items: center;
-    justify-content: start; 
+    justify-content: center; 
 
   }
   div.transbox::before{
-    content: "";
-    background-image: url("/images/Movie_banner.png");
     background-size: cover;
     position: absolute;
     top: 0px;
@@ -36,32 +34,18 @@ div.transbox {
     font-weight: bold;
     color:black;
   }
+
 header {
     display: flex;
-    justify-content: start;
     background-image: linear-gradient(to right, white(6, 14, 46, 0.671) , rgb(185, 229, 236));
     padding: 1em;
-    background-image:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)), url(../super-team-project/images/Movie_banner.png);
+    /* background-image:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)), url(./images/Movie_banner.png); */
     background-size:contain;
-    border-bottom:white solid;
-    
-    
+    border-bottom:white solid;   
 }
-
-header > h1 {
-    font-family:  "Audiowide", sans-serif;
-    -webkit-text-stroke: 2px lightblue;
-    position: relative;
-  color:lightblue;  
-  font-size: 4rem;
-  line-height: 0.9;
-  /* text-align: center; */
+header h1 {
+    text-decoration: underline #ee6e73;
 }
-/* .header-title{
-    background: rgba(0, 0, 0, 0.6);
-        color: #fff;
-} */
-
 select {
     display: block;
 }
@@ -98,8 +82,6 @@ span.rInline {
 }
 #reviewsGrid{
     display: block;
-    /* border:black;
-    border-style: solid; */
     margin-top: 10px;
     width: auto; 
 }
@@ -108,9 +90,6 @@ span.rInline {
     height: 400px;
     border-radius: 0.30rem;
     
-    
-
-
 }
 #genreResults-container h3{
    color:#00acc1;
