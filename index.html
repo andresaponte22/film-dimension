@@ -31,12 +31,15 @@
 
 
   <main>
+    <div id ="background-image">
+
+    </div>
     <!-- ------------------TOP OF THE PAGE ACROSSS------------- -->
     <!-- Movie Search Container -->
     <section class="row">
       <div id="movieSearch-container" class="col s3">
         <input id="movieTitle" name="movieTitle" type=text placeholder="Movie Title"/>
-        <a class="waves-effect waves-light btn blue-grey darken-3 btn" id="searchBtn"><i class="material-icons left">movie</i>Search</a>
+        <a class="waves-effect waves-light btn cyan darken-1 btn" id="searchBtn"><i class="material-icons left">movie</i>Search</a>
       </div>
 
       <div id="searchHistory-container" class="col s9">
@@ -80,7 +83,7 @@
           </select> 
           <div id="genreResults-container">
             <blockquote>
-              <h3>Popular movies by genre</h3>
+              <h3>Popular Movies by Genre</h3>
             </blockquote>
               <!-- APPEND GENRE MOVIE RESULTS HERE THROUGH JAVASCRIPT -->
           </div>
@@ -92,8 +95,9 @@
       <!-- COLUMN 2: Right Side: 2 Divs >> 1st Container for Embedded Youtube Video, 2nd Container -->
       <section class="col s8">
         <!-- Container1 -->
-
-        <div id="movieTrailer-container">
+        <div class= "row">
+          <div class= "col s4 offset-s3" id="movieTrailer-container">
+          </div>
         </div>
         
         <!-- Container2 -->

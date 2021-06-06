@@ -2,11 +2,12 @@
     margin: 0;
 }
 body{
-    background: url("./images/clipboard.jpg") no-repeat center center fixed;
+    background:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)), url("./images/clipboard.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+
 }
 
 div.transbox {
@@ -16,6 +17,7 @@ div.transbox {
     display: flex;
    align-items: center;
     justify-content: start; 
+
   }
   div.transbox::before{
     content: "";
@@ -26,32 +28,31 @@ div.transbox {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    opacity: 0.95;
     background-size: contain;
   }
   
   div.transbox p {
     margin: 5%;
     font-weight: bold;
-    color:white;
+    color:black;
   }
 header {
     display: flex;
     justify-content: start;
     background-image: linear-gradient(to right, white(6, 14, 46, 0.671) , rgb(185, 229, 236));
     padding: 1em;
-    background-image: url(../super-team-project/images/Movie_banner.png);
+    background-image:linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)), url(../super-team-project/images/Movie_banner.png);
     background-size:contain;
-    border-bottom: white solid;
+    border-bottom:white solid;
     
     
 }
 
 header > h1 {
     font-family:  "Audiowide", sans-serif;
-    -webkit-text-stroke: 2px white;
+    -webkit-text-stroke: 2px lightblue;
     position: relative;
-  color:white;  
+  color:lightblue;  
   font-size: 4rem;
   line-height: 0.9;
   /* text-align: center; */
@@ -74,24 +75,31 @@ span.rInline {
 }
 #searchHistory-container{
     display: block;
-    border:white;
-    border-style: solid;
     margin-top: 10px;
     width: auto;
+    color: #00acc1;
 }
+#searchHistory{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 65em;
+}
+#searchHistory >li:hover{
+    cursor: pointer;
+    color: #ef5350;
 
+}
 #movieTrailer-container{
     display: block;
-    border:white;
-    border-style: solid;
     margin-top: 10px;
     width: auto;
     border-radius: 0.30rem;
 }
 #reviewsGrid{
     display: block;
-    border:white;
-    border-style: solid;
+    /* border:black;
+    border-style: solid; */
     margin-top: 10px;
     width: auto; 
 }
@@ -100,9 +108,10 @@ span.rInline {
     height: 400px;
     border-radius: 0.30rem;
     
+    
 
 
 }
 #genreResults-container h3{
-   color: white;
+   color:#00acc1;
 }
