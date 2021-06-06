@@ -50,10 +50,6 @@ select {
     display: block;
 }
 
-#searchHistory {
-    display: inline;
-}
-
 span.rInline {
     display: inline;
 }
@@ -67,12 +63,16 @@ span.rInline {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    width: 65em;
+    width: 60em;
 }
+
+#searchHistory >li {
+    font-size: xx-large;
+}
+
 #searchHistory >li:hover{
     cursor: pointer;
-    color: #ef5350;
-
+    color: #ee6e73;
 }
 #movieTrailer-container{
     display: block;
