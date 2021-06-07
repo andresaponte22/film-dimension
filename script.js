@@ -31,7 +31,7 @@ var genreResultsContainerEl = document.querySelector("#genreResults-container");
 // Global Variables
 var pastSearches = [];
 var pastSearchesID = []
-var apiKeyImbd = "3598b8265cmsh45b2bdf797a68a4p11d2b1jsn8d213ce924ae"
+var apiKeyImbd = "6fe8f8382cmsh92b517b93c8e6dap1c91a6jsn33a3741aafbd"
 var apiKeyYoutube = "85d6732c5dmsh40c484b3b3afddcp18c9afjsna308e42c1988"
 var movieTitle = movieTitleInput.value;
 
