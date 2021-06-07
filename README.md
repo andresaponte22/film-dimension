@@ -35,5 +35,5 @@ After not being able to decide on a movie to watch. I open the application then 
 ## Mockup
 
 The anation below displays the functionality of the app;
-  ![Screnshot](images/Screenshot.gif)
+  ![Screenshot](images/Screenshot.gif)
 
